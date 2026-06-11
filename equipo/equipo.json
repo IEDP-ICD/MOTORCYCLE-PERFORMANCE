@@ -6,7 +6,7 @@
     { "id": "stat1-num", "label_id": "stat1-label", "num": "10+",   "label": "Servicios" },
     { "id": "stat2-num", "label_id": "stat2-label", "num": "100%",  "label": "Garantía" },
     { "id": "stat3-num", "label_id": "stat3-label", "num": "TODAS", "label": "Las marcas" },
-    { "id": "stat4-num", "label_id": "stat4-label", "num": "24H",   "label": "Respuesta" }
+    { "id": "stat4-num", "label_id": "stat4-label", "num": "100+",   "label": "Clientes" }
   ],
   "integrantes": [
     {
