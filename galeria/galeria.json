@@ -1,0 +1,42 @@
+[
+  {
+    "nombre": "Mantenimiento de motor Honda",
+    "categoria": "Taller",
+    "archivo": "taller-motor-honda.jpg"
+  },
+  {
+    "nombre": "Cambio de aceite y filtros",
+    "categoria": "Taller",
+    "archivo": "cambio-aceite.jpg"
+  },
+  {
+    "nombre": "Revisión de frenos",
+    "categoria": "Taller",
+    "archivo": "revision-frenos.jpg"
+  },
+  {
+    "nombre": "Diagnóstico electrónico",
+    "categoria": "Taller",
+    "archivo": "diagnostico-electronico.jpg"
+  },
+  {
+    "nombre": "Yamaha MT-07 en el taller",
+    "categoria": "Motos",
+    "archivo": "yamaha-mt07.jpg"
+  },
+  {
+    "nombre": "Honda CBR en servicio",
+    "categoria": "Motos",
+    "archivo": "honda-cbr.jpg"
+  },
+  {
+    "nombre": "Repuestos originales disponibles",
+    "categoria": "Productos",
+    "archivo": "repuestos.jpg"
+  },
+  {
+    "nombre": "Interior del taller MPG",
+    "categoria": "Taller",
+    "archivo": "taller-interior.jpg"
+  }
+]
