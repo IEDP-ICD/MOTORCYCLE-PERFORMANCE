@@ -1,0 +1,26 @@
+[
+  {
+    "red": "WhatsApp",
+    "icono": "💬",
+    "handle": "304 4709863",
+    "url": "https://wa.me/573044709863?text=Hola%20MPG%2C%20quiero%20información%20sobre%20sus%20servicios%20🏍️"
+  },
+  {
+    "red": "Instagram",
+    "icono": "📸",
+    "handle": "@mpg.cucuta",
+    "url": "https://instagram.com/mpg.cucuta"
+  },
+  {
+    "red": "Facebook",
+    "icono": "📘",
+    "handle": "MPG Motorcycle",
+    "url": "https://facebook.com/mpgmotorcycle"
+  },
+  {
+    "red": "TikTok",
+    "icono": "🎵",
+    "handle": "@mpg.garage",
+    "url": "https://tiktok.com/@mpg.garage"
+  }
+]
