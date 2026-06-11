@@ -1,0 +1,31 @@
+{
+  "mision": "Ofrecer a los motociclistas de Cúcuta y la región un servicio técnico de alta calidad, con diagnóstico preciso, repuestos originales y mano de obra garantizada, posicionando al Motorcycle Performance Garage como el taller de confianza para quienes exigen lo mejor para su moto.",
+  "vision": "Consolidarnos como el taller mecánico de motocicletas más reconocido del norte de Santander, expandiendo nuestros servicios y nuestra presencia digital para llegar a más motociclistas que buscan rendimiento, seguridad y un servicio que realmente conoce de motos.",
+  "sobre_nosotros": "Somos el equipo detrás del proyecto de marketing del Motorcycle Performance Garage, taller especializado en motocicletas ubicado en Trapiches V. Rosario, Cúcuta. Nuestro proyecto busca impulsar digitalmente un negocio real de nuestra comunidad.",
+  "estadisticas": [
+    { "id": "stat1-num", "label_id": "stat1-label", "num": "10+",   "label": "Servicios" },
+    { "id": "stat2-num", "label_id": "stat2-label", "num": "100%",  "label": "Garantía" },
+    { "id": "stat3-num", "label_id": "stat3-label", "num": "TODAS", "label": "Las marcas" },
+    { "id": "stat4-num", "label_id": "stat4-label", "num": "24H",   "label": "Respuesta" }
+  ],
+  "integrantes": [
+    {
+      "nombre": "Nombre Apellido",
+      "rol": "Marketing digital",
+      "descripcion": "Encargado de la estrategia digital del taller: redes sociales, contenido fotográfico y posicionamiento de la marca MPG en plataformas digitales.",
+      "foto": "integrante1.jpg"
+    },
+    {
+      "nombre": "Nombre Apellido",
+      "rol": "Contenido y producción",
+      "descripcion": "Responsable de la producción de videos, fotografía de servicios y gestión del catálogo digital de productos y servicios del taller.",
+      "foto": "integrante2.jpg"
+    },
+    {
+      "nombre": "Nombre Apellido",
+      "rol": "Diseño y web",
+      "descripcion": "Diseño gráfico, identidad visual y desarrollo del sitio web del emprendimiento de marketing para el Motorcycle Performance Garage.",
+      "foto": "integrante3.jpg"
+    }
+  ]
+}
