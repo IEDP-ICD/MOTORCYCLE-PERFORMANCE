@@ -1,0 +1,26 @@
+[
+  {
+    "titulo": "Mantenimiento preventivo paso a paso",
+    "categoria": "Servicio",
+    "descripcion": "Todo el proceso de mantenimiento preventivo de una motocicleta, desde el diagnóstico inicial hasta la entrega al cliente.",
+    "youtube_id": "PEGA_EL_ID_DEL_VIDEO_AQUI"
+  },
+  {
+    "titulo": "Diagnóstico electrónico en MPG",
+    "categoria": "Taller",
+    "descripcion": "Cómo realizamos el diagnóstico computarizado de motos con inyección electrónica en nuestro taller.",
+    "youtube_id": "PEGA_EL_ID_DEL_VIDEO_AQUI"
+  },
+  {
+    "titulo": "Las mejores motos del 2025",
+    "categoria": "Motos",
+    "descripcion": "Reseña de los modelos más destacados de motocicletas para este año: rendimiento, precio y equipamiento.",
+    "youtube_id": "PEGA_EL_ID_DEL_VIDEO_AQUI"
+  },
+  {
+    "titulo": "Tips de mantenimiento para tu moto",
+    "categoria": "Consejos",
+    "descripcion": "Los 5 consejos más importantes para mantener tu moto en perfecto estado entre visitas al taller.",
+    "youtube_id": "PEGA_EL_ID_DEL_VIDEO_AQUI"
+  }
+]
