@@ -1,0 +1,1938 @@
+<!DOCTYPE html>
+<!--
+  ╔══════════════════════════════════════════════════════════════╗
+  ║   MPG — MOTORCYCLE PERFORMANCE GARAGE                        ║
+  ║   Marketing de Taller Mecánico · IEDP · Cúcuta              ║
+  ╠══════════════════════════════════════════════════════════════╣
+  ║  ESTRUCTURA DE CARPETAS EN GITHUB:                           ║
+  ║                                                              ║
+  ║  MOTORCYCLE-PERFORMANCE/                                     ║
+  ║  ├── index.html                ← este archivo               ║
+  ║  ├── img/                                                    ║
+  ║  │   ├── logo.png              ← logo MPG                   ║
+  ║  │   ├── escudo.png            ← escudo IEDP                 ║
+  ║  │   └── hero-bg.jpg           ← foto de fondo del hero      ║
+  ║  ├── galeria/                                                ║
+  ║  │   ├── galeria.json          ← fotos del taller y motos    ║
+  ║  │   └── (fotos JPG/PNG)                                     ║
+  ║  ├── catalogo/                                               ║
+  ║  │   ├── catalogo.json         ← servicios/productos sin prec║
+  ║  │   └── (fotos de productos)                                ║
+  ║  ├── videos/                                                 ║
+  ║  │   └── videos.json           ← videos del taller/motos     ║
+  ║  ├── equipo/                                                 ║
+  ║  │   ├── equipo.json           ← misión, visión, integrantes ║
+  ║  │   └── (fotos del equipo)                                  ║
+  ║  └── redes/                                                  ║
+  ║      └── redes.json            ← redes sociales              ║
+  ╚══════════════════════════════════════════════════════════════╝
+-->
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MPG — Motorcycle Performance Garage · IEDP</title>
+  <meta name="description" content="Motorcycle Performance Garage — Taller especializado en motocicletas. Servicio, repuestos y performance. Cúcuta." />
+
+  <!--
+    FUENTES:
+    - Barlow Condensed: tipografía condensada de alto impacto, usada en MotoGP y branding automotriz
+    - Rajdhani: sans-serif técnica, perfecta para datos y especificaciones
+    - Inter: cuerpo de texto limpio y legible
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,800;0,900;1,700&family=Rajdhani:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ═══════════════════════════════════════════════════════════
+       VARIABLES GLOBALES
+       Paleta extraída del logo MPG:
+       Naranja racing, negro asfalto, blanco bandera, gris acero
+       ═══════════════════════════════════════════════════════════ */
+    :root {
+      /* Naranja agresivo del logo */
+      --naranja:        #e8620a;   /* Naranja principal exacto del logo */
+      --naranja-vivo:   #ff7620;   /* Naranja más brillante — hover */
+      --naranja-oscuro: #b84c05;   /* Naranja oscuro — bordes activos */
+      --naranja-suave:  rgba(232,98,10,0.12); /* Naranja transparente — fondos */
+      --naranja-glow:   0 0 30px rgba(232,98,10,0.5); /* Resplandor naranja */
+
+      /* Negros y asfaltos */
+      --negro:          #080808;   /* Negro asfalto — fondo principal */
+      --negro-suave:    #0e0e0e;   /* Negro cálido — secciones alternas */
+      --grafito:        #141414;   /* Grafito — superficie de tarjetas */
+      --grafito-claro:  #1c1c1c;   /* Grafito claro — hover */
+      --acero:          #252525;   /* Acero — bordes */
+      --acero-claro:    #333333;   /* Acero claro — separadores */
+
+      /* Blancos y grises */
+      --blanco:         #ffffff;
+      --blanco-90:      rgba(255,255,255,0.90);
+      --blanco-60:      rgba(255,255,255,0.60);
+      --blanco-30:      rgba(255,255,255,0.30);
+      --blanco-08:      rgba(255,255,255,0.06);
+      --gris:           #9a9a9a;   /* Gris medio — texto secundario */
+
+      /* Tipografías */
+      --font-racing:  'Barlow Condensed', sans-serif;  /* Títulos racing */
+      --font-tech:    'Rajdhani', sans-serif;           /* Datos técnicos */
+      --font-body:    'Inter', sans-serif;              /* Cuerpo */
+
+      /* Dimensiones — esquinas casi rectas, estética garaje */
+      --radio: 4px;
+      --radio-lg: 8px;
+
+      /* Sombras */
+      --sombra-sm:  0 2px 12px rgba(0,0,0,0.7);
+      --sombra-md:  0 6px 28px rgba(0,0,0,0.8);
+      --sombra-naranja: 0 8px 32px rgba(232,98,10,0.25);
+    }
+
+    /* Reset */
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--negro);
+      color: var(--blanco-90);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       PATRÓN DE BANDERA A CUADROS
+       Textura sutil de fondo — referencia directa al logo MPG
+       ═══════════════════════════════════════════════════════════ */
+    /* Se aplica como pseudo-elemento en secciones específicas */
+    .fondo-cuadros::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      /* Cuadrícula tipo bandera de ajedrez usando gradientes */
+      background-image:
+        repeating-conic-gradient(
+          rgba(255,255,255,0.025) 0% 25%,
+          transparent 0% 50%
+        );
+      background-size: 24px 24px;
+      pointer-events: none;
+    }
+
+    /* TICKER ELIMINADO — era demasiado cargado visualmente */
+    .ticker {
+      background: var(--naranja);
+      padding: 7px 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .ticker-track {
+      display: inline-flex;
+      animation: ticker 30s linear infinite;
+    }
+
+    .ticker-item {
+      font-family: var(--font-racing);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--negro);
+      padding: 0 2.5rem;
+    }
+
+    /* Separador de bandera a cuadros entre ítems */
+    .ticker-sep {
+      opacity: 0.5;
+      font-size: 0.7rem;
+    }
+
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       BARRA DE NAVEGACIÓN
+       Negro con línea naranja inferior, tipografía racing
+       ═══════════════════════════════════════════════════════════ */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(8,8,8,0.97);
+      backdrop-filter: blur(16px);
+      border-bottom: 2px solid var(--naranja);
+      padding: 0 2.5rem;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* Logo en la nav */
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+    }
+
+    .nav-logo img {
+      height: 44px;
+      width: auto;
+      object-fit: contain;
+      /* El logo tiene fondo transparente o naranja — lo mostramos completo */
+    }
+
+    /* Links de navegación */
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+      align-items: center;
+    }
+
+    .nav-links a {
+      font-family: var(--font-racing);
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--blanco-60);
+      text-decoration: none;
+      transition: color 0.2s;
+      position: relative;
+    }
+
+    /* Subrayado naranja al hover */
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--naranja);
+      transition: width 0.3s;
+    }
+
+    .nav-links a:hover { color: var(--naranja); }
+    .nav-links a:hover::after { width: 100%; }
+
+    /* Botón CTA de WhatsApp en la nav */
+    .nav-whatsapp {
+      font-family: var(--font-racing);
+      font-size: 0.82rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--negro) !important;
+      background: var(--naranja);
+      padding: 9px 20px;
+      text-decoration: none;
+      border-radius: var(--radio);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.2s, transform 0.1s;
+      box-shadow: var(--naranja-glow);
+    }
+
+    .nav-whatsapp:hover {
+      background: var(--naranja-vivo) !important;
+      transform: translateY(-1px);
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       HERO: PORTADA FULL-SCREEN ESTILO MOTORSPORT
+       Fondo oscuro con imagen de moto, texto diagonal agresivo
+       ═══════════════════════════════════════════════════════════ */
+    .hero {
+      min-height: 95vh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      background: var(--negro);
+    }
+
+    /* Imagen de fondo del hero */
+    /* ARCHIVO: img/hero-bg.jpg — foto de moto o del taller */
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('img/hero-bg.jpg');
+      background-size: cover;
+      background-position: center;
+      /* Filtro oscuro y ligeramente anaranjado */
+      filter: brightness(0.35) saturate(0.8);
+      transform: scale(1.05);
+      transition: transform 8s ease;
+    }
+
+    /* Zoom lento al cargar */
+    .hero-bg.activo { transform: scale(1); }
+
+    /* Degradado sobre la imagen para legibilidad del texto */
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        105deg,
+        rgba(8,8,8,0.95) 0%,
+        rgba(8,8,8,0.7) 40%,
+        rgba(232,98,10,0.1) 70%,
+        rgba(8,8,8,0.5) 100%
+      );
+    }
+
+    /* Línea diagonal naranja decorativa */
+    .hero-diagonal {
+      position: absolute;
+      top: 0;
+      right: 35%;
+      width: 3px;
+      height: 100%;
+      background: linear-gradient(to bottom, transparent, var(--naranja), transparent);
+      opacity: 0.3;
+      transform: skewX(-8deg);
+    }
+
+    /* Contenido del hero */
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 4rem 4rem 8rem 5rem; /* padding-bottom aumentado para q los botones respiren */
+      max-width: 750px;
+    }
+
+    /* Etiqueta técnica superior */
+    .hero-label {
+      font-family: var(--font-tech);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--naranja);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* Ícono de bandera antes del label */
+    .hero-label::before {
+      content: '⬛⬜⬛⬜';
+      font-size: 0.5rem;
+      letter-spacing: 0;
+    }
+
+    /* Título principal racing */
+    .hero h1 {
+      font-family: var(--font-racing);
+      font-size: clamp(3.5rem, 8vw, 9rem);
+      font-weight: 900;
+      line-height: 0.85;
+      color: var(--blanco);
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    /* Acento naranja en el título */
+    .hero h1 .acento {
+      color: var(--naranja);
+      display: block;
+      /* Texto en cursiva para efecto velocidad */
+      font-style: italic;
+    }
+
+    /* Línea naranja bajo el título */
+    .hero-titulo-linea {
+      width: 80px;
+      height: 4px;
+      background: var(--naranja);
+      margin: 1.5rem 0;
+      box-shadow: var(--naranja-glow);
+    }
+
+    /* Descripción del héroe */
+    .hero-desc {
+      font-size: 1rem;
+      color: var(--blanco-60);
+      max-width: 460px;
+      font-weight: 300;
+      line-height: 1.8;
+      margin-bottom: 3rem;
+    }
+
+    /* Logos superpuestos: MPG + IEDP */
+    .hero-logos {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-logo-mpg {
+      height: 70px;
+      width: auto;
+      object-fit: contain;
+      /* Fondo semitransparente para que el logo se vea sobre cualquier imagen */
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.8));
+    }
+
+    .hero-logos-sep {
+      width: 1px;
+      height: 50px;
+      background: var(--acero-claro);
+    }
+
+    .hero-logo-iedp {
+      height: 55px;
+      width: auto;
+      object-fit: contain;
+      opacity: 0.7;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.8));
+    }
+
+    /* Botones del hero */
+    .hero-ctas {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    /* Botón principal naranja */
+    .btn-naranja {
+      font-family: var(--font-racing);
+      font-size: 0.85rem;
+      font-weight: 800;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--negro);
+      background: var(--naranja);
+      padding: 14px 30px;
+      border-radius: var(--radio);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: var(--naranja-glow);
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .btn-naranja:hover {
+      background: var(--naranja-vivo);
+      transform: translateY(-2px);
+    }
+
+    /* Botón ghost */
+    .btn-ghost-naranja {
+      font-family: var(--font-racing);
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--naranja);
+      background: transparent;
+      border: 2px solid var(--naranja);
+      padding: 12px 30px;
+      border-radius: var(--radio);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.2s;
+    }
+
+    .btn-ghost-naranja:hover {
+      background: var(--naranja-suave);
+    }
+
+    /* Panel de stats — bloque independiente DEBAJO del hero, no superpuesto */
+    .hero-stats {
+      position: relative; /* ya no es absolute — no se superpone sobre nada */
+      background: rgba(8,8,8,0.98);
+      border-top: 3px solid var(--naranja);
+      border-bottom: 1px solid var(--acero);
+      padding: 1.25rem 5rem;
+      display: flex;
+      gap: 3rem;
+      z-index: 2;
+    }
+
+    .stat-item { text-align: center; }
+
+    .stat-num {
+      font-family: var(--font-racing);
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: var(--naranja);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-family: var(--font-tech);
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--blanco-30);
+      margin-top: 3px;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       LAYOUT GENERAL
+       ═══════════════════════════════════════════════════════════ */
+    .contenedor {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 0 2.5rem;
+    }
+
+    .seccion { padding: 6rem 0; }
+    .seccion-oscura { background: var(--negro-suave); }
+    .seccion-grafito { background: var(--grafito); }
+
+    /* Encabezado de sección estilo racing */
+    .seccion-header {
+      margin-bottom: 4rem;
+      position: relative;
+    }
+
+    /* Número de sección en técnico */
+    .seccion-num {
+      font-family: var(--font-tech);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--naranja);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* Línea después del número */
+    .seccion-num::after {
+      content: '';
+      flex: 1;
+      max-width: 60px;
+      height: 1px;
+      background: var(--naranja);
+    }
+
+    /* Título de sección */
+    .seccion-header h2 {
+      font-family: var(--font-racing);
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      font-weight: 900;
+      text-transform: uppercase;
+      color: var(--blanco);
+      line-height: 0.9;
+      letter-spacing: 0.02em;
+    }
+
+    /* Parte naranja del título de sección */
+    .seccion-header h2 span { color: var(--naranja); }
+
+    /* Descripción de la sección */
+    .seccion-header p {
+      font-size: 0.92rem;
+      color: var(--gris);
+      max-width: 500px;
+      margin-top: 1rem;
+      font-weight: 300;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       MISIÓN Y VISIÓN
+       ═══════════════════════════════════════════════════════════ */
+    .mv-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      background: var(--acero);
+    }
+
+    .mv-card {
+      background: var(--grafito);
+      padding: 3.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Franja naranja superior */
+    .mv-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--naranja);
+      box-shadow: var(--naranja-glow);
+    }
+
+    /* Número grande decorativo */
+    .mv-bg-num {
+      position: absolute;
+      bottom: -2rem;
+      right: 1rem;
+      font-family: var(--font-racing);
+      font-size: 12rem;
+      font-weight: 900;
+      color: var(--blanco-08);
+      line-height: 1;
+      user-select: none;
+    }
+
+    /* Ícono de la tarjeta */
+    .mv-icono {
+      font-size: 2.5rem;
+      margin-bottom: 1.5rem;
+      display: block;
+    }
+
+    .mv-card h3 {
+      font-family: var(--font-racing);
+      font-size: 2rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--naranja);
+      letter-spacing: 0.05em;
+      margin-bottom: 1.25rem;
+    }
+
+    .mv-card p {
+      font-size: 0.92rem;
+      color: var(--blanco-60);
+      font-weight: 300;
+      line-height: 1.85;
+      position: relative;
+      z-index: 1;
+      max-width: 440px;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       GALERÍA DE FOTOS
+       Grid con tarjetas hover que revelan info
+       ═══════════════════════════════════════════════════════════ */
+    /* Filtros de categoría */
+    .galeria-filtros {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+
+    .filtro-btn {
+      font-family: var(--font-racing);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 7px 18px;
+      border-radius: var(--radio);
+      border: 1px solid var(--acero-claro);
+      background: transparent;
+      color: var(--gris);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .filtro-btn.activo,
+    .filtro-btn:hover {
+      background: var(--naranja);
+      border-color: var(--naranja);
+      color: var(--negro);
+    }
+
+    /* Grid de la galería */
+    #galeria-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      gap: 3px;
+      background: var(--acero);
+    }
+
+    .foto-card {
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      aspect-ratio: 4 / 3;
+      background: var(--grafito);
+    }
+
+    .foto-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s, filter 0.3s;
+      filter: brightness(0.85) contrast(1.1) saturate(0.9);
+    }
+
+    .foto-card:hover img {
+      transform: scale(1.08);
+      filter: brightness(1) contrast(1.05) saturate(1.1);
+    }
+
+    /* Overlay naranja al hover */
+    .foto-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top,
+        rgba(8,8,8,0.9) 0%,
+        rgba(232,98,10,0.15) 50%,
+        transparent 70%);
+      opacity: 0;
+      transition: opacity 0.3s;
+      display: flex;
+      align-items: flex-end;
+      padding: 1.25rem;
+    }
+
+    .foto-card:hover .foto-overlay { opacity: 1; }
+
+    .foto-nombre {
+      font-family: var(--font-racing);
+      font-size: 1rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--blanco);
+      letter-spacing: 0.05em;
+    }
+
+    .foto-cat {
+      font-family: var(--font-tech);
+      font-size: 0.68rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--naranja);
+      margin-top: 3px;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       CATÁLOGO DE SERVICIOS/PRODUCTOS
+       Sin precio — solo info y botón de WhatsApp
+       ═══════════════════════════════════════════════════════════ */
+    #catalogo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 3px;
+      background: var(--acero);
+    }
+
+    .producto-card {
+      background: var(--grafito);
+      overflow: hidden;
+      transition: background 0.3s;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .producto-card:hover { background: var(--grafito-claro); }
+
+    /* Imagen del producto/servicio */
+    .producto-img {
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      background: var(--negro);
+      position: relative;
+    }
+
+    .producto-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s, filter 0.3s;
+      filter: brightness(0.85) saturate(0.9);
+    }
+
+    .producto-card:hover .producto-img img {
+      transform: scale(1.05);
+      filter: brightness(1) saturate(1.1);
+    }
+
+    /* Placeholder si no hay imagen */
+    .producto-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      background: var(--negro);
+    }
+
+    /* Badge de categoría sobre la imagen */
+    .producto-cat-badge {
+      position: absolute;
+      top: 12px;
+      left: 0;
+      /* Sin border-radius izquierdo — efecto cinta */
+      border-radius: 0 var(--radio) var(--radio) 0;
+      background: var(--naranja);
+      color: var(--negro);
+      font-family: var(--font-racing);
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+    }
+
+    /* Cuerpo de la tarjeta */
+    .producto-body {
+      padding: 1.5rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    /* Nombre del servicio/producto */
+    .producto-nombre {
+      font-family: var(--font-racing);
+      font-size: 1.3rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--blanco);
+      letter-spacing: 0.04em;
+      line-height: 1.1;
+    }
+
+    /* Descripción */
+    .producto-desc {
+      font-size: 0.85rem;
+      color: var(--gris);
+      font-weight: 300;
+      line-height: 1.65;
+      flex: 1;
+    }
+
+    /* Especificaciones del servicio */
+    .producto-specs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .spec-tag {
+      font-family: var(--font-tech);
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      padding: 3px 10px;
+      border-radius: var(--radio);
+      border: 1px solid var(--acero-claro);
+      color: var(--gris);
+      text-transform: uppercase;
+    }
+
+    /* Pie de la tarjeta: botones */
+    .producto-footer {
+      display: flex;
+      gap: 8px;
+      padding-top: 1rem;
+      border-top: 1px solid var(--acero);
+    }
+
+    /* Botón "Más info" — transparente */
+    .btn-info {
+      font-family: var(--font-racing);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--blanco-60);
+      background: transparent;
+      border: 1px solid var(--acero-claro);
+      padding: 9px 16px;
+      border-radius: var(--radio);
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+      font-family: var(--font-racing);
+    }
+
+    .btn-info:hover {
+      border-color: var(--naranja);
+      color: var(--naranja);
+    }
+
+    /* Botón "Pedir por WhatsApp" — naranja */
+    .btn-whatsapp {
+      flex: 1;
+      font-family: var(--font-racing);
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--negro);
+      background: var(--naranja);
+      padding: 9px 16px;
+      border-radius: var(--radio);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: background 0.2s;
+      box-shadow: var(--naranja-glow);
+    }
+
+    .btn-whatsapp:hover { background: var(--naranja-vivo); }
+
+    /* Panel de info expandible (se abre al hacer click en "Más info") */
+    .producto-info-panel {
+      display: none;   /* Oculto por defecto */
+      padding: 1rem 1.5rem;
+      background: var(--negro);
+      border-top: 1px solid var(--acero);
+      font-size: 0.83rem;
+      color: var(--blanco-60);
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
+    /* Cuando está abierto */
+    .producto-info-panel.abierto { display: block; }
+
+    /* ═══════════════════════════════════════════════════════════
+       VIDEOS
+       ═══════════════════════════════════════════════════════════ */
+    #videos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 3px;
+      background: var(--acero);
+    }
+
+    .video-card {
+      background: var(--grafito);
+      overflow: hidden;
+      transition: background 0.3s;
+    }
+
+    .video-card:hover { background: var(--grafito-claro); }
+
+    .video-wrap {
+      aspect-ratio: 16 / 9;
+      background: var(--negro);
+    }
+
+    .video-wrap iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+
+    .video-info {
+      padding: 1.25rem 1.5rem 1.5rem;
+    }
+
+    .video-cat {
+      font-family: var(--font-tech);
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--naranja);
+      margin-bottom: 6px;
+    }
+
+    .video-titulo {
+      font-family: var(--font-racing);
+      font-size: 1.15rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--blanco);
+      letter-spacing: 0.04em;
+      line-height: 1.2;
+      margin-bottom: 6px;
+    }
+
+    .video-desc {
+      font-size: 0.82rem;
+      color: var(--gris);
+      font-weight: 300;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       QUIÉNES SOMOS — EQUIPO
+       ═══════════════════════════════════════════════════════════ */
+    #equipo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 3px;
+      background: var(--acero);
+    }
+
+    .miembro-card {
+      background: var(--grafito);
+      overflow: hidden;
+      transition: background 0.3s;
+      position: relative;
+    }
+
+    .miembro-card:hover { background: var(--grafito-claro); }
+
+    /* Franja naranja lateral */
+    .miembro-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 3px;
+      background: var(--naranja);
+    }
+
+    .miembro-foto-wrap {
+      aspect-ratio: 1 / 1;
+      overflow: hidden;
+      background: var(--negro);
+    }
+
+    .miembro-foto {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
+      filter: brightness(0.85) contrast(1.05) saturate(0.85);
+      transition: filter 0.3s, transform 0.4s;
+    }
+
+    .miembro-card:hover .miembro-foto {
+      filter: brightness(1) contrast(1) saturate(1);
+      transform: scale(1.04);
+    }
+
+    .miembro-info { padding: 1.5rem 1.5rem 1.75rem; }
+
+    .miembro-rol {
+      font-family: var(--font-tech);
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--naranja);
+      margin-bottom: 6px;
+    }
+
+    .miembro-nombre {
+      font-family: var(--font-racing);
+      font-size: 1.3rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--blanco);
+      letter-spacing: 0.04em;
+      line-height: 1.1;
+      margin-bottom: 0.75rem;
+    }
+
+    .miembro-desc {
+      font-size: 0.83rem;
+      color: var(--gris);
+      font-weight: 300;
+      line-height: 1.65;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       REDES SOCIALES
+       ═══════════════════════════════════════════════════════════ */
+    #redes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 3px;
+      background: var(--acero);
+    }
+
+    .red-card {
+      background: var(--grafito);
+      padding: 2.5rem 2rem;
+      text-decoration: none;
+      transition: background 0.3s;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .red-card:hover { background: var(--grafito-claro); }
+
+    /* Indicador naranja al hover */
+    .red-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--naranja);
+      transform: scaleX(0);
+      transition: transform 0.3s;
+    }
+
+    .red-card:hover::after { transform: scaleX(1); }
+
+    .red-icono { font-size: 2rem; }
+
+    .red-nombre {
+      font-family: var(--font-tech);
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gris);
+    }
+
+    .red-handle {
+      font-family: var(--font-racing);
+      font-size: 1.3rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--blanco);
+      letter-spacing: 0.05em;
+    }
+
+    .red-arrow {
+      font-family: var(--font-racing);
+      font-size: 1.3rem;
+      color: var(--naranja);
+      margin-top: auto;
+      transition: transform 0.2s;
+    }
+
+    .red-card:hover .red-arrow { transform: translateX(6px); }
+
+    /* ═══════════════════════════════════════════════════════════
+       SKELETONS
+       ═══════════════════════════════════════════════════════════ -->
+    .skeleton {
+      background: linear-gradient(
+        90deg,
+        var(--grafito) 25%,
+        var(--grafito-claro) 50%,
+        var(--grafito) 75%
+      );
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+    }
+
+    @keyframes shimmer {
+      0%   { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    .msg-vacio {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 4rem 2rem;
+      color: var(--gris);
+    }
+
+    .msg-vacio .icono { font-size: 3rem; margin-bottom: 1rem; }
+
+    .msg-vacio h3 {
+      font-family: var(--font-racing);
+      font-size: 1.8rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--blanco-30);
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       LIGHTBOX
+       ═══════════════════════════════════════════════════════════ -->
+    #lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.97);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    #lightbox.activo { display: flex; }
+
+    #lightbox-img {
+      max-width: 90vw;
+      max-height: 88vh;
+      object-fit: contain;
+      border: 1px solid var(--acero-claro);
+    }
+
+    #lightbox-close {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      background: var(--grafito);
+      border: 1px solid var(--acero-claro);
+      color: var(--blanco-60);
+      width: 44px;
+      height: 44px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-family: var(--font-racing);
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color 0.2s, color 0.2s;
+      border-radius: var(--radio);
+    }
+
+    #lightbox-close:hover { border-color: var(--naranja); color: var(--naranja); }
+
+    /* ═══════════════════════════════════════════════════════════
+       FOOTER
+       ═══════════════════════════════════════════════════════════ -->
+    footer {
+      background: var(--negro);
+      border-top: 3px solid var(--naranja);
+    }
+
+    .footer-inner {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 3.5rem 2.5rem;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .footer-logos {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+
+    .footer-logo-mpg {
+      height: 55px;
+      width: auto;
+      object-fit: contain;
+      opacity: 0.75;
+    }
+
+    .footer-sep {
+      width: 1px;
+      height: 40px;
+      background: var(--acero-claro);
+    }
+
+    .footer-logo-iedp {
+      height: 45px;
+      width: auto;
+      object-fit: contain;
+      opacity: 0.5;
+    }
+
+    .footer-centro { text-align: center; }
+
+    .footer-nombre {
+      font-family: var(--font-racing);
+      font-size: 1.5rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      color: var(--naranja);
+      letter-spacing: 0.1em;
+    }
+
+    .footer-sub {
+      font-family: var(--font-tech);
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--blanco-30);
+      margin-top: 4px;
+    }
+
+    .footer-tecnica {
+      text-align: right;
+      font-family: var(--font-tech);
+      font-size: 0.65rem;
+      letter-spacing: 0.08em;
+      line-height: 1.9;
+      color: var(--blanco-30);
+    }
+
+    .footer-tecnica strong {
+      display: block;
+      color: rgba(232,98,10,0.45);
+      letter-spacing: 0.12em;
+      margin-top: 4px;
+      font-size: 0.62rem;
+    }
+
+    /* Barra inferior */
+    .footer-bottom {
+      border-top: 1px solid var(--acero);
+      padding: 1.25rem 2.5rem;
+      max-width: 1300px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-copy {
+      font-family: var(--font-tech);
+      font-size: 0.62rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--blanco-30);
+    }
+
+    /* Información de contacto del taller */
+    .footer-contacto {
+      font-family: var(--font-tech);
+      font-size: 0.7rem;
+      color: var(--blanco-30);
+      letter-spacing: 0.05em;
+      text-align: right;
+      line-height: 1.8;
+    }
+
+    .footer-contacto span { color: var(--naranja); }
+
+    /* ═══════════════════════════════════════════════════════════
+       RESPONSIVE
+       ═══════════════════════════════════════════════════════════ -->
+    @media (max-width: 900px) {
+      .hero-content { padding: 4rem 2rem 6rem; }
+      .hero-stats { padding: 1.25rem 2rem; gap: 1.5rem; flex-wrap: wrap; }
+      .mv-grid { grid-template-columns: 1fr; }
+      .footer-inner { grid-template-columns: 1fr; text-align: center; }
+      .footer-logos { justify-content: center; }
+      .footer-tecnica { text-align: center; }
+      .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .contenedor { padding: 0 1.25rem; }
+      .seccion { padding: 4rem 0; }
+      #videos-grid { grid-template-columns: 1fr; }
+      #catalogo-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       TICKER ELIMINADO — se quitó por ser demasiado cargado
+       ═══════════════════════════════════════════════════════════ -->
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+       BARRA DE NAVEGACIÓN
+       ═══════════════════════════════════════════════════════════ -->
+  <nav>
+    <a class="nav-logo" href="#inicio">
+      <!-- ARCHIVO: img/logo.png — logo MPG -->
+      <img src="img/logo.png" alt="MPG Motorcycle Performance Garage" />
+    </a>
+    <ul class="nav-links">
+      <li><a href="#mision">Nosotros</a></li>
+      <li><a href="#galeria">Galería</a></li>
+      <li><a href="#catalogo">Servicios</a></li>
+      <li><a href="#videos">Videos</a></li>
+      <li><a href="#equipo">Equipo</a></li>
+      <!-- Número de WhatsApp del taller — actualizar con el real -->
+      <li><a class="nav-whatsapp" href="https://wa.me/573044709863" target="_blank" rel="noopener">💬 WhatsApp</a></li>
+    </ul>
+  </nav>
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+       HERO
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="hero fondo-cuadros" id="inicio">
+    <!-- ARCHIVO: img/hero-bg.jpg — foto de moto o del taller en acción -->
+    <div class="hero-bg" id="heroBg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-diagonal"></div>
+
+    <div class="hero-content">
+      <!-- Logos -->
+      <div class="hero-logos">
+        <img class="hero-logo-mpg" src="img/logo.png" alt="MPG" />
+        <div class="hero-logos-sep"></div>
+        <!-- ARCHIVO: img/escudo.png — escudo IEDP -->
+        <img class="hero-logo-iedp" src="img/escudo.png" alt="IEDP" />
+      </div>
+
+      <div class="hero-label">Motorcycle Performance Garage · IEDP · Cúcuta</div>
+
+      <h1>
+        FULL<br>
+        <span class="acento">THROTTLE</span>
+        GARAGE
+      </h1>
+
+      <div class="hero-titulo-linea"></div>
+
+      <p class="hero-desc">
+        Taller especializado en motocicletas. Servicio técnico de alta calidad,
+        repuestos originales y todo lo que tu moto necesita para rendir al máximo.
+        Calle 10b 3-113 loc102 · Trapiches V. Rosario
+      </p>
+
+      <div class="hero-ctas">
+        <a class="btn-naranja" href="#catalogo">Ver servicios →</a>
+        <a class="btn-ghost-naranja" href="https://wa.me/573044709863" target="_blank" rel="noopener">💬 Contactar</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Panel de estadísticas — fuera del hero para no tapar los botones -->
+  <!-- Los datos se cargan desde equipo/equipo.json campo "estadisticas" -->
+  <div class="hero-stats" id="hero-stats">
+    <div class="stat-item">
+      <div class="stat-num" id="stat1-num">—</div>
+      <div class="stat-label" id="stat1-label">Servicios</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" id="stat2-num">—</div>
+      <div class="stat-label" id="stat2-label">Productos</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" id="stat3-num">—</div>
+      <div class="stat-label" id="stat3-label">Experiencia</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" id="stat4-num">—</div>
+      <div class="stat-label" id="stat4-label">Garantía</div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+       MISIÓN Y VISIÓN
+       Archivo: equipo/equipo.json
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="seccion seccion-oscura" id="mision">
+    <div class="contenedor">
+      <div class="seccion-header">
+        <div class="seccion-num">01 — IDENTIDAD</div>
+        <h2>MISIÓN & <span>VISIÓN</span></h2>
+        <p>El propósito que nos mueve y hacia dónde llevamos MPG</p>
+      </div>
+      <div class="mv-grid" id="mision-vision-contenido">
+        <div class="skeleton" style="height:260px"></div>
+        <div class="skeleton" style="height:260px"></div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+       GALERÍA
+       Archivo: galeria/galeria.json
+       Formato:
+       [
+         {
+           "nombre": "Mantenimiento de motor",
+           "categoria": "Servicio",
+           "archivo": "motor-mant.jpg"
+         }
+       ]
+       Categorías sugeridas: "Servicio", "Taller", "Motos", "Productos"
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="seccion" id="galeria">
+    <div class="contenedor">
+      <div class="seccion-header">
+        <div class="seccion-num">02 — EN ACCIÓN</div>
+        <h2>GALERÍA <span>MPG</span></h2>
+        <p>El taller, los trabajos y las motos que pasan por nuestras manos</p>
+      </div>
+      <div class="galeria-filtros" id="galeria-filtros">
+        <button class="filtro-btn activo" onclick="filtrarGaleria('todos')">Todo</button>
+      </div>
+      <div id="galeria-grid">
+        <div class="skeleton" style="height:240px"></div>
+        <div class="skeleton" style="height:240px"></div>
+        <div class="skeleton" style="height:240px"></div>
+        <div class="skeleton" style="height:240px"></div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+       CATÁLOGO DE SERVICIOS Y PRODUCTOS
+       Archivo: catalogo/catalogo.json
+       Formato:
+       [
+         {
+           "nombre": "Servicio de frenos",
+           "categoria": "Servicio",
+           "descripcion": "Revisión, ajuste y cambio de pastillas de freno...",
+           "imagen": "frenos.jpg",
+           "info_detalle": "Incluye: desmontaje, limpieza, cambio de pastillas y prueba de ruta.",
+           "especificaciones": ["Todas las marcas", "Garantía incluida"],
+           "whatsapp_numero": "573044709863",
+           "whatsapp_mensaje": "Hola MPG, quiero información sobre el servicio de frenos"
+         }
+       ]
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="seccion seccion-grafito" id="catalogo">
+    <div class="contenedor">
+      <div class="seccion-header">
+        <div class="seccion-num">03 — SERVICIOS Y PRODUCTOS</div>
+        <h2>CATÁLOGO <span>MPG</span></h2>
+        <p>Conoce nuestros servicios y productos — consulta por WhatsApp</p>
+      </div>
+    </div>
+    <div id="catalogo-grid" style="max-width:1300px;margin:0 auto;padding:0">
+      <div class="skeleton" style="height:340px"></div>
+      <div class="skeleton" style="height:340px"></div>
+      <div class="skeleton" style="height:340px"></div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+       VIDEOS
+       Archivo: videos/videos.json
+       Formato:
+       [
+         {
+           "titulo": "Cambio de aceite completo",
+           "categoria": "Tutorial",
+           "descripcion": "Paso a paso para el cambio de aceite de tu moto",
+           "youtube_id": "CODIGO_YOUTUBE"
+         }
+       ]
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="seccion seccion-oscura" id="videos">
+    <div class="contenedor">
+      <div class="seccion-header">
+        <div class="seccion-num">04 — CONTENIDO</div>
+        <h2>VIDEOS <span>Y MOTOS</span></h2>
+        <p>Tutoriales, servicios en acción y el mundo de las motocicletas</p>
+      </div>
+    </div>
+    <div id="videos-grid" style="max-width:1300px;margin:0 auto">
+      <div class="skeleton" style="height:300px"></div>
+      <div class="skeleton" style="height:300px"></div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+       EQUIPO — QUIÉNES SOMOS
+       Archivo: equipo/equipo.json
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="seccion" id="equipo">
+    <div class="contenedor">
+      <div class="seccion-header">
+        <div class="seccion-num">05 — EL EQUIPO</div>
+        <h2>QUIÉNES <span>SOMOS</span></h2>
+        <p id="sobre-nosotros-texto">Cargando...</p>
+      </div>
+      <div id="equipo-grid">
+        <div class="skeleton" style="height:300px"></div>
+        <div class="skeleton" style="height:300px"></div>
+        <div class="skeleton" style="height:300px"></div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+       REDES SOCIALES
+       Archivo: redes/redes.json
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="seccion seccion-grafito" id="redes">
+    <div class="contenedor">
+      <div class="seccion-header">
+        <div class="seccion-num">06 — SÍGUENOS</div>
+        <h2>REDES <span>SOCIALES</span></h2>
+        <p>Contenido de motos, servicios y novedades del garage</p>
+      </div>
+    </div>
+    <div id="redes-grid" style="max-width:1300px;margin:0 auto">
+      <div class="skeleton" style="height:160px"></div>
+      <div class="skeleton" style="height:160px"></div>
+      <div class="skeleton" style="height:160px"></div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+       FOOTER
+       ═══════════════════════════════════════════════════════════ -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logos">
+        <img class="footer-logo-mpg" src="img/logo.png" alt="MPG" />
+        <div class="footer-sep"></div>
+        <img class="footer-logo-iedp" src="img/escudo.png" alt="IEDP" />
+      </div>
+      <div class="footer-centro">
+        <div class="footer-nombre">Motorcycle Performance Garage</div>
+        <div class="footer-sub">Servicio · Repuestos · Performance · Cúcuta</div>
+      </div>
+      <div class="footer-tecnica">
+        <span>Emprendimiento estudiantil · IEDP</span>
+        <strong>TÉCNICA EN INTEGRACIÓN<br>DE CONTENIDOS DIGITALES</strong>
+        <span>Cúcuta · Norte de Santander · 2025</span>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2025 MPG — MOTORCYCLE PERFORMANCE GARAGE</span>
+      <div class="footer-contacto">
+        <span>📍</span> Calle 10b 3-113 loc102 · Trapiches V. Rosario &nbsp;|&nbsp;
+        <span>📱</span> 304 4709863 · J. Quintero
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- Lightbox -->
+  <div id="lightbox">
+    <button id="lightbox-close" onclick="cerrarLightbox()">ESC</button>
+    <img id="lightbox-img" src="" alt="" />
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+       JAVASCRIPT
+       ═══════════════════════════════════════════════════════════ -->
+  <script>
+
+    /* Ken Burns en el hero background */
+    window.addEventListener('load', () => {
+      const bg = document.getElementById('heroBg');
+      if (bg) bg.classList.add('activo');
+    });
+
+    /* ════ CARGA PRINCIPAL ══════════════════════════════════════ */
+    let todasLasFotos = [];
+
+    window.addEventListener('load', () => {
+      Promise.allSettled([
+        cargarEquipoYMision(),
+        cargarGaleria(),
+        cargarCatalogo(),
+        cargarVideos(),
+        cargarRedes()
+      ]);
+    });
+
+
+    /* ════ EQUIPO Y MISIÓN ══════════════════════════════════════ */
+    async function cargarEquipoYMision() {
+      try {
+        const resp = await fetch('equipo/equipo.json');
+        if (!resp.ok) throw new Error();
+        const d = await resp.json();
+
+        /* Estadísticas del hero */
+        if (d.estadisticas) {
+          ['1','2','3','4'].forEach((n, i) => {
+            const s = d.estadisticas[i];
+            if (s) {
+              document.getElementById(`stat${n}-num`).textContent = s.num;
+              document.getElementById(`stat${n}-label`).textContent = s.label;
+            }
+          });
+        }
+
+        /* Misión y visión */
+        document.getElementById('mision-vision-contenido').innerHTML = `
+          <div class="mv-card">
+            <div class="mv-bg-num">M</div>
+            <span class="mv-icono">🏍️</span>
+            <h3>Misión</h3>
+            <p>${d.mision || 'Próximamente...'}</p>
+          </div>
+          <div class="mv-card">
+            <div class="mv-bg-num">V</div>
+            <span class="mv-icono">🏁</span>
+            <h3>Visión</h3>
+            <p>${d.vision || 'Próximamente...'}</p>
+          </div>
+        `;
+
+        /* Texto sobre nosotros */
+        document.getElementById('sobre-nosotros-texto').textContent =
+          d.sobre_nosotros || 'Apasionados por las motocicletas y la mecánica de alto rendimiento.';
+
+        /* Equipo */
+        const grid = document.getElementById('equipo-grid');
+        if (!d.integrantes?.length) {
+          grid.innerHTML = msgVacio('🔧', 'SIN INTEGRANTES', 'Agrega integrantes en equipo/equipo.json');
+          return;
+        }
+
+        grid.innerHTML = d.integrantes.map((p, i) => `
+          <div class="miembro-card">
+            <div class="miembro-foto-wrap">
+              <img
+                class="miembro-foto"
+                src="equipo/${p.foto}"
+                alt="${esc(p.nombre)}"
+                onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(p.nombre)}&background=141414&color=e8620a&size=300&bold=true'"
+              />
+            </div>
+            <div class="miembro-info">
+              <div class="miembro-rol">${esc(p.rol)}</div>
+              <div class="miembro-nombre">${esc(p.nombre)}</div>
+              <p class="miembro-desc">${esc(p.descripcion)}</p>
+            </div>
+          </div>
+        `).join('');
+
+      } catch {
+        document.getElementById('mision-vision-contenido').innerHTML = `
+          <div class="mv-card"><div class="mv-bg-num">M</div><span class="mv-icono">🏍️</span><h3>Misión</h3><p style="color:var(--gris)">Agrega equipo/equipo.json</p></div>
+          <div class="mv-card"><div class="mv-bg-num">V</div><span class="mv-icono">🏁</span><h3>Visión</h3><p style="color:var(--gris)">Agrega equipo/equipo.json</p></div>
+        `;
+        document.getElementById('sobre-nosotros-texto').textContent = 'Información próximamente.';
+        document.getElementById('equipo-grid').innerHTML = msgVacio('🔧', 'AGREGA EL EQUIPO', 'Crea equipo/equipo.json');
+      }
+    }
+
+
+    /* ════ GALERÍA ══════════════════════════════════════════════ */
+    async function cargarGaleria() {
+      const grid = document.getElementById('galeria-grid');
+      const filtrosDiv = document.getElementById('galeria-filtros');
+      try {
+        const resp = await fetch('galeria/galeria.json');
+        if (!resp.ok) throw new Error();
+        todasLasFotos = await resp.json();
+
+        if (!todasLasFotos.length) {
+          grid.innerHTML = msgVacio('📷', 'SIN FOTOS', 'Agrega fotos en galeria/galeria.json');
+          return;
+        }
+
+        /* Filtros dinámicos */
+        const cats = [...new Set(todasLasFotos.map(f => f.categoria).filter(Boolean))];
+        if (cats.length) {
+          filtrosDiv.innerHTML = `<button class="filtro-btn activo" onclick="filtrarGaleria('todos')">Todo</button>`
+            + cats.map(c => `<button class="filtro-btn" onclick="filtrarGaleria('${esc(c)}')">${esc(c)}</button>`).join('');
+        }
+
+        renderFotos(todasLasFotos, grid);
+      } catch {
+        grid.innerHTML = msgVacio('📷', 'SIN GALERÍA', 'Crea galeria/galeria.json');
+      }
+    }
+
+    function filtrarGaleria(cat) {
+      document.querySelectorAll('.filtro-btn').forEach(b => {
+        b.classList.toggle('activo',
+          (cat === 'todos' && b.textContent === 'Todo') || b.textContent === cat);
+      });
+      renderFotos(
+        cat === 'todos' ? todasLasFotos : todasLasFotos.filter(f => f.categoria === cat),
+        document.getElementById('galeria-grid')
+      );
+    }
+
+    function renderFotos(fotos, grid) {
+      grid.innerHTML = fotos.map(f => `
+        <div class="foto-card" onclick="abrirLightbox('galeria/${f.archivo}', '${esc(f.nombre)}')">
+          <img src="galeria/${f.archivo}" alt="${esc(f.nombre)}" loading="lazy" />
+          <div class="foto-overlay">
+            <div>
+              <div class="foto-nombre">${esc(f.nombre)}</div>
+              ${f.categoria ? `<div class="foto-cat">${esc(f.categoria)}</div>` : ''}
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+
+    /* ════ CATÁLOGO ═════════════════════════════════════════════ */
+    async function cargarCatalogo() {
+      const grid = document.getElementById('catalogo-grid');
+      try {
+        const resp = await fetch('catalogo/catalogo.json');
+        if (!resp.ok) throw new Error();
+        const productos = await resp.json();
+
+        if (!productos.length) {
+          grid.innerHTML = msgVacio('🔧', 'SIN SERVICIOS', 'Agrega servicios en catalogo/catalogo.json');
+          return;
+        }
+
+        grid.innerHTML = productos.map((p, i) => {
+          const imgHTML = p.imagen
+            ? `<img src="catalogo/${p.imagen}" alt="${esc(p.nombre)}" loading="lazy" />`
+            : `<div class="producto-placeholder">🏍️</div>`;
+
+          const specsHTML = (p.especificaciones || [])
+            .map(s => `<span class="spec-tag">${esc(s)}</span>`).join('');
+
+          /* URL de WhatsApp con mensaje predefinido sobre el producto */
+          const waNum = p.whatsapp_numero || '573044709863';
+          const waMsg = encodeURIComponent(p.whatsapp_mensaje || `Hola MPG, quiero información sobre: ${p.nombre}`);
+          const waUrl = `https://wa.me/${waNum}?text=${waMsg}`;
+
+          return `
+            <div class="producto-card">
+              <div class="producto-img">
+                ${imgHTML}
+                ${p.categoria ? `<span class="producto-cat-badge">${esc(p.categoria)}</span>` : ''}
+              </div>
+              <div class="producto-body">
+                <div class="producto-nombre">${esc(p.nombre)}</div>
+                <p class="producto-desc">${esc(p.descripcion || '')}</p>
+                ${specsHTML ? `<div class="producto-specs">${specsHTML}</div>` : ''}
+                <div class="producto-footer">
+                  <!-- Botón "Más info" — abre panel desplegable -->
+                  ${p.info_detalle
+                    ? `<button class="btn-info" onclick="toggleInfo(this)">+ Más info</button>`
+                    : ''}
+                  <!-- Botón WhatsApp — redirige al chat con mensaje predefinido -->
+                  <a class="btn-whatsapp" href="${waUrl}" target="_blank" rel="noopener">
+                    💬 Consultar
+                  </a>
+                </div>
+              </div>
+              ${p.info_detalle
+                ? `<div class="producto-info-panel">${esc(p.info_detalle)}</div>`
+                : ''}
+            </div>
+          `;
+        }).join('');
+
+      } catch {
+        grid.innerHTML = msgVacio('🔧', 'SIN CATÁLOGO', 'Crea catalogo/catalogo.json');
+      }
+    }
+
+    /* Alterna el panel de información de un producto */
+    function toggleInfo(btn) {
+      const card = btn.closest('.producto-card');
+      const panel = card.querySelector('.producto-info-panel');
+      if (!panel) return;
+      const abierto = panel.classList.toggle('abierto');
+      btn.textContent = abierto ? '− Cerrar' : '+ Más info';
+    }
+
+
+    /* ════ VIDEOS ═══════════════════════════════════════════════ */
+    async function cargarVideos() {
+      const grid = document.getElementById('videos-grid');
+      try {
+        const resp = await fetch('videos/videos.json');
+        if (!resp.ok) throw new Error();
+        const videos = await resp.json();
+
+        if (!videos.length) {
+          grid.innerHTML = msgVacio('🎬', 'SIN VIDEOS', 'Agrega videos en videos/videos.json');
+          return;
+        }
+
+        grid.innerHTML = videos.map(v => `
+          <div class="video-card">
+            <div class="video-wrap">
+              <iframe
+                src="https://www.youtube.com/embed/${v.youtube_id}"
+                title="${esc(v.titulo)}"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen loading="lazy"
+              ></iframe>
+            </div>
+            <div class="video-info">
+              <div class="video-cat">${esc(v.categoria || 'Video')}</div>
+              <div class="video-titulo">${esc(v.titulo)}</div>
+              <p class="video-desc">${esc(v.descripcion || '')}</p>
+            </div>
+          </div>
+        `).join('');
+
+      } catch {
+        grid.innerHTML = msgVacio('🎬', 'SIN VIDEOS', 'Crea videos/videos.json');
+      }
+    }
+
+
+    /* ════ REDES ════════════════════════════════════════════════ */
+    async function cargarRedes() {
+      const grid = document.getElementById('redes-grid');
+      try {
+        const resp = await fetch('redes/redes.json');
+        if (!resp.ok) throw new Error();
+        const redes = await resp.json();
+
+        if (!redes.length) {
+          grid.innerHTML = msgVacio('📡', 'SIN REDES', 'Crea redes/redes.json');
+          return;
+        }
+
+        grid.innerHTML = redes.map(r => `
+          <a class="red-card" href="${r.url}" target="_blank" rel="noopener noreferrer">
+            <span class="red-icono">${r.icono || '🔗'}</span>
+            <span class="red-nombre">${esc(r.red)}</span>
+            <span class="red-handle">${esc(r.handle)}</span>
+            <span class="red-arrow">→</span>
+          </a>
+        `).join('');
+
+      } catch {
+        grid.innerHTML = msgVacio('📡', 'SIN REDES', 'Crea redes/redes.json');
+      }
+    }
+
+
+    /* ════ LIGHTBOX ═════════════════════════════════════════════ */
+    function abrirLightbox(src, alt) {
+      if (!src || src.includes('undefined')) return;
+      document.getElementById('lightbox-img').src = src;
+      document.getElementById('lightbox-img').alt = alt;
+      document.getElementById('lightbox').classList.add('activo');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function cerrarLightbox() {
+      document.getElementById('lightbox').classList.remove('activo');
+      document.body.style.overflow = '';
+    }
+
+    document.getElementById('lightbox').addEventListener('click', function(e) {
+      if (e.target === this) cerrarLightbox();
+    });
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') cerrarLightbox();
+    });
+
+
+    /* ════ AUXILIARES ═══════════════════════════════════════════ */
+    function msgVacio(icono, titulo, desc) {
+      return `<div class="msg-vacio"><div class="icono">${icono}</div><h3>${titulo}</h3><p>${desc}</p></div>`;
+    }
+
+    function esc(t) {
+      if (typeof t !== 'string') return '';
+      return t.replace(/&/g,'&amp;').replace(/</g,'&lt;')
+               .replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+    }
+
+  </script>
+
+</body>
+</html>
