@@ -1,0 +1,56 @@
+[
+  {
+    "nombre": "Mantenimiento preventivo",
+    "categoria": "Servicio",
+    "descripcion": "Revisión completa de la moto: cambio de aceite, filtros de aire y aceite, revisión de frenos, cadena y sistema eléctrico. Incluye diagnóstico general.",
+    "imagen": "mantenimiento-preventivo.jpg",
+    "especificaciones": ["Todas las marcas", "Incluye diagnóstico", "Con garantía"],
+    "whatsapp": "573044709863",
+    "whatsapp_mensaje": "Hola MPG, quiero información sobre el servicio de Mantenimiento Preventivo 🏍️"
+  },
+  {
+    "nombre": "Afinación de motor",
+    "categoria": "Servicio",
+    "descripcion": "Afinación completa del motor para máximo rendimiento: ajuste de carburador o inyección, regulación de válvulas, cambio de bujías y revisión de compresión.",
+    "imagen": "afinacion-motor.jpg",
+    "especificaciones": ["Motor 4T y 2T", "Diagnóstico incluido", "Resultados garantizados"],
+    "whatsapp": "573044709863",
+    "whatsapp_mensaje": "Hola MPG, quiero información sobre el servicio de Afinación de Motor 🏍️"
+  },
+  {
+    "nombre": "Diagnóstico electrónico",
+    "categoria": "Servicio",
+    "descripcion": "Diagnóstico computarizado para motos con inyección electrónica. Lectura de códigos de falla, análisis de sensores y solución de problemas eléctricos.",
+    "imagen": "diagnostico-electronico.jpg",
+    "especificaciones": ["Equipos de última tecnología", "Motos inyección", "Reporte detallado"],
+    "whatsapp": "573044709863",
+    "whatsapp_mensaje": "Hola MPG, quiero información sobre el servicio de Diagnóstico Electrónico 🏍️"
+  },
+  {
+    "nombre": "Sistema de frenos",
+    "categoria": "Servicio",
+    "descripcion": "Revisión, limpieza y cambio de pastillas, discos y líquido de frenos. Garantizamos tu seguridad en cada frenada.",
+    "imagen": "frenos.jpg",
+    "especificaciones": ["Freno delantero y trasero", "Repuestos originales", "Prueba de ruta"],
+    "whatsapp": "573044709863",
+    "whatsapp_mensaje": "Hola MPG, quiero información sobre el servicio de Sistema de Frenos 🏍️"
+  },
+  {
+    "nombre": "Repuestos originales",
+    "categoria": "Producto",
+    "descripcion": "Disponemos de un amplio catálogo de repuestos originales para las principales marcas: Honda, Yamaha, Suzuki, Kawasaki, AKT y más.",
+    "imagen": "repuestos.jpg",
+    "especificaciones": ["Repuestos originales", "Principales marcas", "Garantía de fábrica"],
+    "whatsapp": "573044709863",
+    "whatsapp_mensaje": "Hola MPG, quiero consultar disponibilidad de Repuestos 🏍️"
+  },
+  {
+    "nombre": "Sincronización y carburación",
+    "categoria": "Servicio",
+    "descripcion": "Ajuste y sincronización del sistema de carburación o inyección para mejorar el consumo de combustible y la respuesta del acelerador.",
+    "imagen": "carburacion.jpg",
+    "especificaciones": ["Carburador e inyección", "Optimización de mezcla", "Mayor rendimiento"],
+    "whatsapp": "573044709863",
+    "whatsapp_mensaje": "Hola MPG, quiero información sobre el servicio de Sincronización 🏍️"
+  }
+]
