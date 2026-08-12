@@ -3,7 +3,7 @@
   "vision": "Consolidarnos como el taller mecánico de motocicletas más reconocido del norte de Santander, expandiendo nuestros servicios y nuestra presencia digital para llegar a más motociclistas que buscan rendimiento, seguridad y un servicio que realmente conoce de motos.",
   "sobre_nosotros": "Somos el equipo detrás del proyecto de marketing del Motorcycle Performance Garage, taller especializado en motocicletas ubicado en Trapiches V. Rosario, Cúcuta. Nuestro proyecto busca impulsar digitalmente un negocio real de nuestra comunidad.",
   "estadisticas": [
-    { "id": "stat1-num", "label_id": "stat1-label", "num": "10+",   "label": "Servicios" },
+    { "id": "stat1-num", "label_id": "stat1-label", "num": "90+",   "label": "Servicios" },
     { "id": "stat2-num", "label_id": "stat2-label", "num": "100%",  "label": "Garantía" },
     { "id": "stat3-num", "label_id": "stat3-label", "num": "TODAS", "label": "Las marcas" },
     { "id": "stat4-num", "label_id": "stat4-label", "num": "100+",   "label": "Clientes" }
@@ -16,7 +16,7 @@
       "foto": "luisito.jpeg"
     },
     {
-      "nombre": "Nombre Apellido",
+      "nombre": "josedo",
       "rol": "Contenido y producción",
       "descripcion": "Responsable de la producción de videos, fotografía de servicios y gestión del catálogo digital de productos y servicios del taller.",
       "foto": "integrante2.jpg"
