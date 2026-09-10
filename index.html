@@ -907,11 +907,15 @@
     .producto-info-panel.abierto { display: block; }
 
     /* ═══════════════════════════════════════════════════════════
-       VIDEOS
+       VIDEOS — fichas de Instagram y TikTok
+       Ninguna de las dos plataformas permite incrustar un
+       reproductor en un sitio estático sin backend, así que cada
+       ficha es un enlace con miniatura y botón de play que abre el
+       video en su red de origen.
        ═══════════════════════════════════════════════════════════ */
     #videos-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
       gap: 3px;
       background: var(--acero);
     }
@@ -925,15 +929,58 @@
     .video-card:hover { background: var(--grafito-claro); }
 
     .video-wrap {
-      aspect-ratio: 16 / 9;
+      aspect-ratio: 9 / 16;
       background: var(--negro);
+      position: relative;
+      display: block;
     }
 
-    .video-wrap iframe {
+    .video-wrap img {
       width: 100%;
       height: 100%;
-      border: none;
+      object-fit: cover;
       display: block;
+    }
+
+    .video-wrap-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+    }
+
+    .video-wrap-placeholder.red-instagram {
+      background: linear-gradient(135deg, #4f5bd5, #962fbf, #d62976, #fa7e1e, #feda75);
+    }
+
+    .video-wrap-placeholder.red-tiktok {
+      background: linear-gradient(135deg, #1c1c1e, #3a2a30);
+    }
+
+    .video-play-badge {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,0.2);
+      transition: background 0.3s;
+    }
+
+    .video-wrap:hover .video-play-badge { background: rgba(0,0,0,0.45); }
+
+    .video-play-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.92);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      color: var(--negro);
     }
 
     .video-info {
@@ -1511,7 +1558,7 @@
 
 
   <!-- ═══════════════════════════════════════════════════════════
-       VIDEOS
+       VIDEOS — solo Instagram y TikTok, no se maneja YouTube
        Archivo: videos/videos.json
        Formato:
        [
@@ -1519,9 +1566,23 @@
            "titulo": "Cambio de aceite completo",
            "categoria": "Tutorial",
            "descripcion": "Paso a paso para el cambio de aceite de tu moto",
-           "youtube_id": "CODIGO_YOUTUBE"
+           "red": "Instagram",
+           "instagram_url": "https://www.instagram.com/reel/CODIGO_DEL_REEL/"
+         },
+         {
+           "titulo": "Frenos al día",
+           "categoria": "Servicio",
+           "descripcion": "Revisión rápida del sistema de frenos",
+           "red": "TikTok",
+           "tiktok_url": "https://www.tiktok.com/@usuario/video/CODIGO_DEL_VIDEO"
          }
        ]
+       Para TikTok, el código consulta la API pública oEmbed de TikTok
+       al cargar la página y reemplaza la miniatura y la descripción
+       por las reales del video (si no responde, se usa
+       "descripcion"). Instagram no ofrece ese endpoint público sin
+       cuenta de desarrollador de Meta, así que su ficha siempre usa
+       el título/descripción escritos aquí.
        ═══════════════════════════════════════════════════════════ -->
   <section class="seccion seccion-oscura" id="videos">
     <div class="contenedor">
@@ -1849,26 +1910,72 @@
           return;
         }
 
-        grid.innerHTML = videos.map(v => `
-          <div class="video-card">
-            <div class="video-wrap">
-              <iframe
-                src="https://www.youtube.com/embed/${v.youtube_id}"
-                title="${esc(v.titulo)}"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen loading="lazy"
-              ></iframe>
+        grid.innerHTML = videos.map((v, i) => {
+          const esTikTok = !!v.tiktok_url;
+          const url = v.tiktok_url || v.instagram_url || '#';
+          const red = v.red || (esTikTok ? 'TikTok' : 'Instagram');
+          const icono = esTikTok ? '🎵' : '📸';
+          const claseRed = esTikTok ? 'red-tiktok' : 'red-instagram';
+
+          return `
+            <div class="video-card">
+              <a class="video-wrap" href="${esc(url)}" target="_blank" rel="noopener noreferrer" aria-label="Ver en ${esc(red)}: ${esc(v.titulo)}">
+                <div class="video-wrap-placeholder ${claseRed}" id="video-thumb-${i}">${icono}</div>
+                <div class="video-play-badge"><span class="video-play-icon">▶</span></div>
+              </a>
+              <div class="video-info">
+                <div class="video-cat">${esc(v.categoria || red)}</div>
+                <div class="video-titulo">${esc(v.titulo)}</div>
+                <p class="video-desc" id="video-desc-${i}">${esc(v.descripcion || `Toca para verlo en ${red}`)}</p>
+              </div>
             </div>
-            <div class="video-info">
-              <div class="video-cat">${esc(v.categoria || 'Video')}</div>
-              <div class="video-titulo">${esc(v.titulo)}</div>
-              <p class="video-desc">${esc(v.descripcion || '')}</p>
-            </div>
-          </div>
-        `).join('');
+          `;
+        }).join('');
+
+        /* TikTok sí tiene oEmbed público: trae miniatura y descripción reales */
+        videos.forEach((v, i) => {
+          if (v.tiktok_url) cargarDatosTikTok(v.tiktok_url, i);
+        });
 
       } catch {
         grid.innerHTML = msgVacio('🎬', 'SIN VIDEOS', 'Crea videos/videos.json');
+      }
+    }
+
+    /*
+    ══════════════════════════════════════════════════════════════
+    FUNCIÓN: cargarDatosTikTok — Consulta la API pública oEmbed de
+    TikTok (sin backend ni API key) para reemplazar el ícono musical
+    por la miniatura real del video y la descripción manual por el
+    texto real que el video tiene en TikTok. Si TikTok no responde
+    (sin internet, video privado o eliminado), la ficha se queda tal
+    cual quedó con los datos de videos.json. Instagram no ofrece un
+    endpoint público equivalente sin cuenta de desarrollador de Meta,
+    así que sus fichas no intentan esta consulta.
+    ══════════════════════════════════════════════════════════════
+    */
+    async function cargarDatosTikTok(tiktokUrl, i) {
+      try {
+        const resp = await fetch(`https://www.tiktok.com/oembed?url=${encodeURIComponent(tiktokUrl)}`);
+        if (!resp.ok) throw new Error('oEmbed de TikTok no disponible');
+        const data = await resp.json();
+
+        const thumbEl = document.getElementById(`video-thumb-${i}`);
+        if (thumbEl && data.thumbnail_url) {
+          const img = document.createElement('img');
+          img.id = `video-thumb-${i}`;
+          img.src = data.thumbnail_url;
+          img.alt = data.title || 'Video de TikTok';
+          img.loading = 'lazy';
+          thumbEl.replaceWith(img);
+        }
+
+        const descEl = document.getElementById(`video-desc-${i}`);
+        if (descEl && data.title) {
+          descEl.textContent = data.title;
+        }
+      } catch (err) {
+        console.warn('No se pudo obtener la descripción de TikTok:', err.message);
       }
     }
 
