@@ -1583,6 +1583,18 @@
        "descripcion"). Instagram no ofrece ese endpoint público sin
        cuenta de desarrollador de Meta, así que su ficha siempre usa
        el título/descripción escritos aquí.
+
+       MINIATURA MANUAL (opcional, recomendada para Instagram):
+       agrega el campo "miniatura" con el nombre de una captura de
+       pantalla del video/reel subida a la carpeta videos/, y esa
+       imagen se usa como portada de la ficha en vez del ícono con
+       degradado. Funciona para Instagram y TikTok por igual.
+       {
+         "titulo": "Cambio de aceite completo",
+         "red": "Instagram",
+         "instagram_url": "https://www.instagram.com/reel/CODIGO_DEL_REEL/",
+         "miniatura": "cambio-de-aceite-portada.jpg"
+       }
        ═══════════════════════════════════════════════════════════ -->
   <section class="seccion seccion-oscura" id="videos">
     <div class="contenedor">
@@ -1917,10 +1929,17 @@
           const icono = esTikTok ? '🎵' : '📸';
           const claseRed = esTikTok ? 'red-tiktok' : 'red-instagram';
 
+          /* Si hay una miniatura subida a mano, se usa de una vez.
+             Si no, se arranca con el ícono y, para TikTok, la función
+             de abajo intenta reemplazarlo por la miniatura real. */
+          const thumbHTML = v.miniatura
+            ? `<img src="videos/${esc(v.miniatura)}" alt="${esc(v.titulo)}" id="video-thumb-${i}" loading="lazy" />`
+            : `<div class="video-wrap-placeholder ${claseRed}" id="video-thumb-${i}">${icono}</div>`;
+
           return `
             <div class="video-card">
               <a class="video-wrap" href="${esc(url)}" target="_blank" rel="noopener noreferrer" aria-label="Ver en ${esc(red)}: ${esc(v.titulo)}">
-                <div class="video-wrap-placeholder ${claseRed}" id="video-thumb-${i}">${icono}</div>
+                ${thumbHTML}
                 <div class="video-play-badge"><span class="video-play-icon">▶</span></div>
               </a>
               <div class="video-info">
