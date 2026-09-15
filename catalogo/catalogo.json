@@ -61,5 +61,32 @@
     "especificaciones": ["Desarme completo", "Ajuste de mezcla aire-combustible", "Calibración incluida"],
     "whatsapp": "573044709863",
     "whatsapp_mensaje": "Hola MPG, quiero información sobre el servicio de Limpieza de Carburador 🏍️"
+  },
+  {
+    "nombre": "Bujías",
+    "categoria": "Producto",
+    "descripcion": "Repuesto de alta calidad, compatible con diferentes tipos y modelos de motocicletas. Ofrece un encendido eficiente y un buen rendimiento del motor.",
+    "imagen": "bujias.jpg",
+    "especificaciones": ["Alta calidad", "Varios modelos", "Encendido eficiente"],
+    "whatsapp": "573044709863",
+    "whatsapp_mensaje": "Hola MPG, quiero consultar disponibilidad de Bujías 🏍️"
+  },
+  {
+    "nombre": "Cauchos",
+    "categoria": "Producto",
+    "descripcion": "Cauchos de excelente calidad y resistencia, diseñados para brindar buen agarre, estabilidad y seguridad en diferentes tipos de terreno. Disponibles para varios modelos de motocicletas.",
+    "imagen": "cauchos.jpg",
+    "especificaciones": ["Excelente resistencia", "Buen agarre", "Varios modelos"],
+    "whatsapp": "573044709863",
+    "whatsapp_mensaje": "Hola MPG, quiero consultar disponibilidad de Cauchos 🏍️"
+  },
+  {
+    "nombre": "Pastillas de freno",
+    "categoria": "Producto",
+    "descripcion": "Repuesto de alta calidad que ofrece frenado eficiente, buena resistencia y seguridad durante la conducción. Compatibles con diferentes modelos de motocicletas.",
+    "imagen": "pastillas-freno.jpg",
+    "especificaciones": ["Frenado eficiente", "Alta resistencia", "Varios modelos"],
+    "whatsapp": "573044709863",
+    "whatsapp_mensaje": "Hola MPG, quiero consultar disponibilidad de Pastillas de Freno 🏍️"
   }
 ]
