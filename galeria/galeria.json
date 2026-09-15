@@ -38,5 +38,20 @@
     "nombre": "Interior del taller MPG",
     "categoria": "Servicios",
     "archivo": "taller-interior.jpg"
+  },
+  {
+    "nombre": "Línea de aceites",
+    "categoria": "Productos",
+    "archivo": "linea-aceites.jpg"
+  },
+  {
+    "nombre": "Línea de manubrios",
+    "categoria": "Productos",
+    "archivo": "linea-manubrios.jpg"
+  },
+  {
+    "nombre": "Línea de accesorios",
+    "categoria": "Productos",
+    "archivo": "linea-accesorios.jpg"
   }
 ]
