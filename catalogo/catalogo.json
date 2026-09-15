@@ -52,5 +52,14 @@
     "especificaciones": ["Carburador e inyección", "Optimización de mezcla", "Mayor rendimiento"],
     "whatsapp": "573044709863",
     "whatsapp_mensaje": "Hola MPG, quiero información sobre el servicio de Sincronización 🏍️"
+  },
+  {
+    "nombre": "Limpieza de carburador",
+    "categoria": "Servicio",
+    "descripcion": "Desarme, limpieza profunda y calibración del carburador para eliminar residuos y mejorar el encendido, el ralentí y el consumo de combustible.",
+    "imagen": "limpieza-carburador.jpg",
+    "especificaciones": ["Desarme completo", "Ajuste de mezcla aire-combustible", "Calibración incluida"],
+    "whatsapp": "573044709863",
+    "whatsapp_mensaje": "Hola MPG, quiero información sobre el servicio de Limpieza de Carburador 🏍️"
   }
 ]
