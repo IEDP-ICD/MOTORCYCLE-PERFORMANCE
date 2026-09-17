@@ -13,5 +13,10 @@
     "nombre": "Línea de accesorios",
     "categoria": "Productos",
     "archivo": "linea-accesorios.jpg"
+  },
+  {
+    "nombre": "Poster de servicios",
+    "categoria": "Servicios",
+    "archivo": "poster-servicios.jpg"
   }
 ]
