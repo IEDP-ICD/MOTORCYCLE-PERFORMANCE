@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<!--
+  ╔══════════════════════════════════════════════════════════════╗
+  ║  SUSTENTACIÓN DEL PROYECTO — MOTORCYCLE PERFORMANCE GARAGE    ║
+  ║  Página autocontenida, no enlazada desde el sitio principal. ║
+  ║  Accesible solo escribiendo la URL: /sustentacion/           ║
+  ║  No aparece en el menú ni en buscadores (ver robots.txt).    ║
+  ╚══════════════════════════════════════════════════════════════╝
+-->
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Sustentación · MPG — Motorcycle Performance Garage</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,800;0,900;1,700&family=Rajdhani:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ═══ Paleta idéntica a la del sitio principal ═══ */
+    :root {
+      --naranja:        #e8620a;
+      --naranja-vivo:   #ff7620;
+      --naranja-oscuro: #b84c05;
+      --naranja-suave:  rgba(232,98,10,0.12);
+      --naranja-glow:   0 0 30px rgba(232,98,10,0.5);
+      --negro:          #080808;
+      --negro-suave:    #0e0e0e;
+      --grafito:        #141414;
+      --grafito-claro:  #1c1c1c;
+      --acero:          #252525;
+      --acero-claro:    #333333;
+      --blanco:         #ffffff;
+      --blanco-90:      rgba(255,255,255,0.90);
+      --blanco-60:      rgba(255,255,255,0.60);
+      --blanco-30:      rgba(255,255,255,0.30);
+      --blanco-08:      rgba(255,255,255,0.06);
+      --gris:           #9a9a9a;
+      --font-racing: 'Barlow Condensed', sans-serif;
+      --font-tech:   'Rajdhani', sans-serif;
+      --font-body:   'Inter', sans-serif;
+      --radio: 4px;
+      --radio-lg: 8px;
+      --sombra-sm: 0 2px 12px rgba(0,0,0,0.7);
+      --sombra-md: 0 6px 28px rgba(0,0,0,0.8);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      height: 100%;
+      background: var(--negro);
+      font-family: var(--font-body);
+      color: var(--blanco-90);
+      overflow: hidden;
+    }
+
+    img { max-width: 100%; display: block; }
+
+    /* Textura de bandera a cuadros de fondo */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background-image: repeating-conic-gradient(rgba(255,255,255,0.02) 0% 25%, transparent 0% 50%);
+      background-size: 26px 26px;
+    }
+
+    /* ═══ Deck ═══ */
+    .deck { position: relative; width: 100vw; height: 100vh; overflow: hidden; z-index: 1; }
+
+    .slide {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      padding: 6.4rem 2rem 6rem;
+      opacity: 0;
+      transform: translateX(60px) scale(0.97);
+      pointer-events: none;
+      transition: transform 0.7s cubic-bezier(0.34, 1.1, 0.64, 1), opacity 0.5s ease;
+      z-index: 1;
+      overflow: hidden;
+    }
+    .slide.activa { opacity: 1; transform: translateX(0) scale(1); pointer-events: auto; z-index: 2; }
+    .slide.saliendo-izq { transform: translateX(-70px) scale(0.97); opacity: 0; }
+    .slide.saliendo-der { transform: translateX(70px) scale(0.97); opacity: 0; }
+
+    .slide-inner {
+      position: relative; z-index: 1;
+      width: 100%; max-width: 1220px; max-height: 100%;
+      overflow-y: auto; overflow-x: hidden;
+      padding: .5rem .5rem 1rem;
+      scrollbar-width: thin; scrollbar-color: var(--naranja) transparent;
+    }
+    .slide-inner::-webkit-scrollbar { width: 6px; }
+    .slide-inner::-webkit-scrollbar-thumb { background: var(--naranja); border-radius: 10px; }
+
+    .slide-inner > * {
+      opacity: 0; transform: translateY(18px);
+      transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.34, 1.3, 0.64, 1);
+    }
+    .slide.activa .slide-inner > * { opacity: 1; transform: translateY(0); }
+    .slide.activa .slide-inner > *:nth-child(1) { transition-delay: 0.05s; }
+    .slide.activa .slide-inner > *:nth-child(2) { transition-delay: 0.14s; }
+    .slide.activa .slide-inner > *:nth-child(3) { transition-delay: 0.23s; }
+    .slide.activa .slide-inner > *:nth-child(4) { transition-delay: 0.32s; }
+    .slide.activa .slide-inner > *:nth-child(5) { transition-delay: 0.41s; }
+
+    /* Número gigante decorativo de fondo, como en el sitio */
+    .num-fondo {
+      position: absolute; z-index: 0; pointer-events: none; user-select: none;
+      font-family: var(--font-racing); font-weight: 900;
+      font-size: clamp(10rem, 30vw, 22rem);
+      color: var(--blanco-08); line-height: 1;
+      bottom: -4rem; right: -1rem;
+    }
+
+    /* ═══ Tipografía y elementos comunes ═══ */
+    .seccion-num {
+      font-family: var(--font-tech); font-size: 0.75rem; font-weight: 600;
+      letter-spacing: 0.3em; text-transform: uppercase; color: var(--naranja);
+      margin-bottom: 0.6rem; display: flex; align-items: center; gap: 10px;
+    }
+    .seccion-num::after { content: ''; flex: 1; max-width: 60px; height: 1px; background: var(--naranja); }
+
+    .slide h2 {
+      font-family: var(--font-racing); font-weight: 900; text-transform: uppercase;
+      font-size: clamp(2rem, 4.6vw, 3.6rem); line-height: 0.92; color: var(--blanco);
+      letter-spacing: 0.01em; margin-bottom: 1.1rem;
+    }
+    .slide h2 span { color: var(--naranja); }
+
+    .lead {
+      font-family: var(--font-body); font-weight: 300; font-size: clamp(0.9rem, 1.5vw, 1.05rem);
+      color: var(--blanco-60); line-height: 1.7; max-width: 720px;
+    }
+
+    .tarjeta {
+      background: var(--grafito); border: 1px solid var(--acero); position: relative;
+      padding: 1.5rem 1.7rem; overflow: hidden;
+    }
+    .tarjeta::before { content: ''; position: absolute; top:0; left:0; right:0; height:3px; background: var(--naranja); box-shadow: var(--naranja-glow); }
+    .tarjeta h3 {
+      font-family: var(--font-racing); font-weight: 800; text-transform: uppercase;
+      font-size: 1.15rem; color: var(--blanco); margin-bottom: 0.6rem; letter-spacing: 0.02em;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .tarjeta p { font-family: var(--font-body); font-weight: 300; font-size: 0.88rem; color: var(--blanco-60); line-height: 1.65; }
+
+    /* ═══ Slide 1: portada ═══ */
+    .portada { text-align: center; align-items: center; }
+    .portada-logo { width: min(220px, 42vw); margin: 0 auto 1.2rem; filter: drop-shadow(0 8px 24px rgba(232,98,10,0.35)); animation: flotar 6s ease-in-out infinite; }
+    @keyframes flotar { 50% { transform: translateY(-10px); } }
+    .portada .label {
+      font-family: var(--font-tech); font-size: 0.78rem; font-weight: 600; letter-spacing: 0.3em;
+      text-transform: uppercase; color: var(--naranja); margin-bottom: 1.1rem;
+      display: inline-flex; align-items: center; gap: 12px;
+    }
+    .portada .label::before { content: '⬛⬜⬛⬜'; font-size: 0.5rem; letter-spacing: 0; }
+    .portada h1 {
+      font-family: var(--font-racing); font-weight: 900; text-transform: uppercase;
+      font-size: clamp(2.6rem, 8vw, 5.4rem); line-height: 0.86; color: var(--blanco);
+    }
+    .portada h1 em { font-style: italic; color: var(--naranja); display: block; }
+    .portada-linea { width: 80px; height: 4px; background: var(--naranja); margin: 1.3rem auto; box-shadow: var(--naranja-glow); }
+    .portada .subt { font-family: var(--font-body); font-weight: 300; color: var(--blanco-60); max-width: 34rem; margin: 0 auto 1.6rem; font-size: 0.95rem; }
+    .equipo-pills { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 1.6rem; }
+    .equipo-pills span {
+      font-family: var(--font-tech); font-weight: 600; font-size: 0.8rem; letter-spacing: 0.05em;
+      color: var(--blanco-90); border: 1px solid var(--acero-claro); background: var(--blanco-08);
+      padding: 7px 16px; border-radius: var(--radio);
+    }
+    .portada-footer { font-family: var(--font-tech); font-size: 0.7rem; color: var(--blanco-30); letter-spacing: 0.1em; text-transform: uppercase; }
+
+    /* ═══ Integrantes ═══ */
+    .integrantes-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
+    .miembro-card { background: var(--grafito); border: 1px solid var(--acero); text-align: center; padding: 1.6rem 1.2rem; position: relative; }
+    .miembro-card::before { content: ''; position: absolute; top:0; left:0; right:0; height:3px; background: var(--naranja); box-shadow: var(--naranja-glow); }
+    .miembro-foto { width: 84px; height: 84px; border-radius: 50%; object-fit: cover; margin: 0 auto 0.8rem; border: 3px solid var(--naranja); box-shadow: var(--naranja-glow); }
+    .miembro-rol { font-family: var(--font-tech); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--naranja); margin-bottom: 4px; }
+    .miembro-nombre { font-family: var(--font-racing); font-size: 1.3rem; font-weight: 800; text-transform: uppercase; color: var(--blanco); margin-bottom: 0.5rem; }
+    .miembro-desc { font-family: var(--font-body); font-weight: 300; font-size: 0.78rem; color: var(--blanco-60); line-height: 1.5; }
+
+    /* Dos columnas texto + imagen */
+    .dos-col { display: grid; grid-template-columns: 1.15fr .85fr; gap: 2rem; align-items: center; }
+    .dos-col.invertido { grid-template-columns: .85fr 1.15fr; }
+    .dos-col img { width: 100%; max-height: 360px; object-fit: cover; border: 1px solid var(--acero); box-shadow: var(--sombra-md); }
+    .dos-col .col-texto { display: flex; flex-direction: column; gap: 0.9rem; }
+
+    .dos-tarjetas { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+
+    /* Objetivo general destacado */
+    .objetivo-general {
+      background: linear-gradient(135deg, rgba(232,98,10,0.16), rgba(232,98,10,0.04));
+      border: 1px solid var(--naranja-oscuro); padding: 1.3rem 1.6rem; margin-bottom: 1.2rem;
+      font-family: var(--font-body); font-weight: 300; font-size: 0.98rem; color: var(--blanco-90); line-height: 1.55;
+    }
+    .objetivo-general .etiqueta {
+      display: block; font-family: var(--font-tech); font-size: 0.68rem; letter-spacing: 0.16em;
+      text-transform: uppercase; font-weight: 700; color: var(--naranja); margin-bottom: 6px;
+    }
+
+    .lista-check { list-style: none; display: grid; gap: 0.7rem; }
+    .lista-check li {
+      display: flex; align-items: flex-start; gap: 12px; background: var(--grafito); border: 1px solid var(--acero);
+      padding: 12px 16px; font-family: var(--font-body); font-weight: 300; font-size: 0.88rem; color: var(--blanco-60);
+    }
+    .lista-check li::before {
+      content: '▸'; flex-shrink: 0; color: var(--naranja); font-weight: 900; font-size: 1rem; margin-top: -1px;
+    }
+
+    .mv-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: var(--acero); }
+    .mv-card { background: var(--grafito); padding: 1.6rem 1.8rem; position: relative; overflow: hidden; }
+    .mv-card::before { content: ''; position: absolute; top:0; left:0; right:0; height:3px; background: var(--naranja); box-shadow: var(--naranja-glow); }
+    .mv-card h3 { font-family: var(--font-racing); font-weight: 800; text-transform: uppercase; font-size: 1.3rem; color: var(--naranja); margin-bottom: 0.6rem; }
+    .mv-card p { font-family: var(--font-body); font-weight: 300; font-size: 0.85rem; color: var(--blanco-60); line-height: 1.6; }
+
+    .tech-chips { display: flex; flex-wrap: wrap; gap: 10px; }
+    .tech-chips span {
+      font-family: var(--font-tech); font-weight: 600; font-size: 0.82rem; letter-spacing: 0.03em;
+      color: var(--blanco-90); border: 1px solid var(--acero-claro); background: var(--blanco-08);
+      padding: 8px 16px; border-radius: var(--radio); display: inline-flex; align-items: center; gap: 6px;
+    }
+
+    .servicio-bloque { background: var(--grafito); border: 1px solid var(--acero); padding: 1.2rem 1.4rem; display: flex; gap: 14px; align-items: flex-start; margin-bottom: 1rem; position: relative; overflow: hidden; }
+    .servicio-bloque::before { content: ''; position: absolute; top:0; left:0; bottom:0; width:3px; background: var(--naranja); box-shadow: var(--naranja-glow); }
+    .servicio-bloque .icono {
+      font-size: 1.5rem; flex-shrink: 0; width: 46px; height: 46px; background: var(--naranja-suave);
+      border: 1px solid var(--naranja-oscuro); display: flex; align-items: center; justify-content: center;
+    }
+    .servicio-bloque h3 { font-family: var(--font-racing); font-weight: 800; text-transform: uppercase; font-size: 1.1rem; color: var(--blanco); margin-bottom: 3px; }
+    .servicio-bloque p { font-family: var(--font-body); font-weight: 300; font-size: 0.85rem; color: var(--blanco-60); line-height: 1.55; }
+
+    .segmento-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+    .segmento-card { background: var(--grafito); border: 1px solid var(--acero); padding: 1.5rem 1.6rem; position: relative; overflow: hidden; }
+    .segmento-card::before { content: ''; position: absolute; top:0; left:0; right:0; height:3px; background: var(--naranja); box-shadow: var(--naranja-glow); }
+    .segmento-card .icono { font-size: 1.5rem; margin-bottom: 0.5rem; display: block; }
+    .segmento-card h3 { font-family: var(--font-racing); font-weight: 800; text-transform: uppercase; font-size: 1.1rem; color: var(--naranja); margin-bottom: 0.4rem; }
+    .segmento-card p { font-family: var(--font-body); font-weight: 300; font-size: 0.85rem; color: var(--blanco-60); line-height: 1.55; }
+
+    /* Paleta de colores */
+    .paleta-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .9rem; margin-bottom: 1.2rem; }
+    .paleta-chip { border: 1px solid var(--acero); overflow: hidden; display: flex; flex-direction: column; }
+    .paleta-chip .swatch { height: 90px; }
+    .paleta-chip .info { background: var(--grafito); padding: .6rem .7rem; }
+    .paleta-chip .nombre { font-family: var(--font-racing); font-weight: 800; text-transform: uppercase; font-size: .95rem; color: var(--blanco); }
+    .paleta-chip .hex { font-family: var(--font-tech); font-size: .74rem; color: var(--blanco-60); margin-top: 2px; }
+    .fuentes-row { display: flex; gap: 1.2rem; flex-wrap: wrap; }
+    .fuente-card { background: var(--grafito); border: 1px solid var(--acero); padding: .9rem 1.5rem; text-align: center; }
+    .fuente-card .muestra { font-size: 1.7rem; margin-bottom: 2px; color: var(--naranja); }
+    .fuente-card .muestra.racing { font-family: var(--font-racing); font-weight: 900; text-transform: uppercase; }
+    .fuente-card .muestra.tech { font-family: var(--font-tech); font-weight: 700; }
+    .fuente-card .muestra.body { font-family: var(--font-body); font-weight: 400; color: var(--blanco-90); }
+    .fuente-card .etiqueta-fuente { font-family: var(--font-tech); font-size: .7rem; color: var(--blanco-30); letter-spacing: .1em; text-transform: uppercase; }
+
+    /* Cierre */
+    .final { text-align: center; align-items: center; }
+    .final .logo-final { width: min(130px, 28vw); margin: 0 auto 1rem; filter: drop-shadow(0 8px 24px rgba(232,98,10,0.4)); }
+    .final .whatsapp-final {
+      display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-racing); font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.95rem; color: var(--negro);
+      background: var(--naranja); padding: 13px 28px; border-radius: var(--radio); text-decoration: none;
+      box-shadow: var(--naranja-glow); margin-top: 1rem;
+    }
+
+    /* ═══ Controles de navegación ═══ */
+    .nav-controles {
+      position: fixed; left: 0; right: 0; bottom: 0; z-index: 50;
+      display: flex; align-items: center; justify-content: center; gap: 1.2rem;
+      padding: 1rem 1.2rem 1.3rem; background: linear-gradient(to top, rgba(0,0,0,0.75), transparent);
+    }
+    .nav-btn {
+      width: 42px; height: 42px; border: none; background: var(--naranja); color: var(--negro);
+      font-size: 1.1rem; cursor: pointer; display: flex; align-items: center; justify-content: center;
+      box-shadow: var(--naranja-glow); transition: transform 0.25s cubic-bezier(0.34,1.5,0.64,1);
+      flex-shrink: 0; border-radius: var(--radio);
+    }
+    .nav-btn:hover { transform: scale(1.1); background: var(--naranja-vivo); }
+    .nav-btn:active { transform: scale(0.92); }
+    .nav-btn.deshabilitado { opacity: 0.3; pointer-events: none; }
+    .nav-puntos { display: flex; gap: 6px; flex-wrap: wrap; max-width: 46vw; justify-content: center; }
+    .nav-punto { width: 8px; height: 8px; background: var(--acero-claro); border: none; cursor: pointer; padding: 0; transition: transform 0.25s, background 0.25s; }
+    .nav-punto.activo { background: var(--naranja); transform: scale(1.4); box-shadow: var(--naranja-glow); }
+    .nav-contador { font-family: var(--font-tech); font-size: 0.72rem; color: var(--blanco-60); font-weight: 700; letter-spacing: 0.08em; min-width: 46px; text-align: center; }
+
+    @media (max-width: 760px) {
+      .slide { padding: 5.4rem 1.1rem 6.4rem; }
+      .integrantes-grid, .dos-tarjetas, .mv-grid, .segmento-grid { grid-template-columns: 1fr; }
+      .dos-col, .dos-col.invertido { grid-template-columns: 1fr; }
+      .dos-col img { max-height: 220px; }
+      .paleta-grid { grid-template-columns: repeat(2, 1fr); }
+      .nav-puntos { max-width: 40vw; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="deck" id="deck">
+
+    <!-- ═══ 1. PORTADA ═══ -->
+    <section class="slide" data-bg="1">
+      <div class="slide-inner portada">
+        <img class="portada-logo" src="../img/logo.png" alt="MPG — Motorcycle Performance Garage" />
+        <p class="label">Sustentación de proyecto · SENA</p>
+        <h1>MPG<br><em>Racing Garage</em></h1>
+        <div class="portada-linea"></div>
+        <p class="subt">Motorcycle Performance Garage — marketing digital para un taller de motos real de Trapiches, Villa del Rosario.</p>
+        <div class="equipo-pills">
+          <span>🔧 Luis Osorio</span>
+          <span>🎥 José David</span>
+          <span>💻 Celiar Picón</span>
+        </div>
+        <p class="portada-footer">Técnica en Integración de Contenidos Digitales · SENA</p>
+      </div>
+    </section>
+
+    <!-- ═══ 2. INTEGRANTES ═══ -->
+    <section class="slide" data-bg="2">
+      <div class="slide-inner">
+        <p class="seccion-num">01 — El equipo</p>
+        <h2>Integrantes</h2>
+        <div class="integrantes-grid">
+          <div class="miembro-card">
+            <img class="miembro-foto" src="../equipo/luisito.jpeg" alt="Luis Osorio" />
+            <div class="miembro-rol">Líder de Marketing</div>
+            <div class="miembro-nombre">Luis Osorio</div>
+            <p class="miembro-desc">Estrategia digital del taller: redes sociales, contenido fotográfico y posicionamiento de la marca MPG.</p>
+          </div>
+          <div class="miembro-card">
+            <img class="miembro-foto" src="../equipo/JoséDavid.jpg" alt="José David" />
+            <div class="miembro-rol">Contenido y producción</div>
+            <div class="miembro-nombre">José David</div>
+            <p class="miembro-desc">Producción de videos, fotografía de servicios y gestión del catálogo digital.</p>
+          </div>
+          <div class="miembro-card">
+            <img class="miembro-foto" src="../equipo/celiar-picon.jpg" alt="Celiar Picón" />
+            <div class="miembro-rol">Diseñador web</div>
+            <div class="miembro-nombre">Celiar Picón</div>
+            <p class="miembro-desc">Diseño gráfico, identidad visual y desarrollo del sitio web del proyecto.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ 3. NECESIDAD E IDEA ═══ -->
+    <section class="slide" data-bg="3">
+      <div class="slide-inner">
+        <p class="seccion-num">02 — El punto de partida</p>
+        <h2>Descripción de la <span>necesidad e idea</span></h2>
+        <div class="dos-col">
+          <div class="col-texto">
+            <div class="tarjeta">
+              <h3>🎥 Nuestra motivación</h3>
+              <p>Creamos videos para redes sociales para generar ingresos y cubrir nuestras necesidades básicas.</p>
+            </div>
+            <div class="tarjeta">
+              <h3>📣 La necesidad detectada</h3>
+              <p>Muchos talleres de motos tienen poca presencia digital. Por eso ofrecemos crear y administrar contenido para atraer más clientes y generar ingresos.</p>
+            </div>
+          </div>
+          <img src="img/taller.jpg" alt="Fachada del taller Motorcycle Performance Garage" />
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ 4. IDEA DE SOLUCIÓN INNOVADORA ═══ -->
+    <section class="slide" data-bg="4">
+      <div class="slide-inner">
+        <p class="seccion-num">03 — Nuestra propuesta</p>
+        <h2>Idea de solución <span>innovadora</span></h2>
+        <p class="lead" style="margin-bottom:1rem;">
+          Creamos una estrategia digital personalizada para talleres de motos, usando herramientas como Canva, CapCut, Instagram y WhatsApp. El proyecto incluye un calendario de contenido con videos cortos, fotos de antes y después, tips de mantenimiento y promociones.
+        </p>
+        <div class="objetivo-general" style="margin-bottom:0;">
+          <span class="etiqueta">🚀 Resultado esperado</span>
+          Ayudar a los talleres a tener más visibilidad en redes sociales, atraer nuevos clientes y fortalecer su presencia digital.
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ 5. OBJETIVOS ═══ -->
+    <section class="slide" data-bg="5">
+      <div class="slide-inner">
+        <p class="seccion-num">04 — Hacia dónde vamos</p>
+        <h2>Objetivos</h2>
+        <div class="objetivo-general">
+          <span class="etiqueta">🎯 General</span>
+          Crear contenido para redes sociales.
+        </div>
+        <p style="font-family:var(--font-tech); font-size:0.72rem; letter-spacing:0.14em; text-transform:uppercase; font-weight:700; color:var(--naranja); margin-bottom:0.5rem;">Específicos</p>
+        <ul class="lista-check">
+          <li>Crear un plan de contenido mensual enfocado en videos, promociones y tips de mecánica.</li>
+          <li>Implementar herramientas digitales como WhatsApp para mejorar la atención al cliente.</li>
+          <li>Analizar el estado actual de la presencia digital del taller de motos.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ═══ 6. JUSTIFICACIÓN ═══ -->
+    <section class="slide" data-bg="6">
+      <div class="slide-inner">
+        <p class="seccion-num">05 — Por qué vale la pena</p>
+        <h2>Justificación</h2>
+        <div class="dos-col invertido">
+          <img src="img/taller.jpg" alt="Vista de la fachada del taller MPG" />
+          <div class="tarjeta">
+            <p style="font-family:var(--font-body); font-weight:300; font-size:0.92rem; color:var(--blanco-60); line-height:1.7;">
+              Este proyecto busca mejorar la presencia digital de un taller de motos mediante contenido visual atractivo y la implementación de herramientas como WhatsApp. Su valor agregado radica en el enfoque innovador y específico para el sector mecánico.
+              <br><br>
+              Además, promueve el uso de medios digitales como herramienta de transformación económica para pequeños negocios, generando más oportunidades de ventas y fidelización de clientes.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ 7. TECNOLOGÍA A EMPLEAR ═══ -->
+    <section class="slide" data-bg="7">
+      <div class="slide-inner">
+        <p class="seccion-num">06 — Cómo lo haremos</p>
+        <h2>Tecnología a <span>emplear</span></h2>
+        <div class="servicio-bloque">
+          <span class="icono">🛠️</span>
+          <div><h3>Herramientas digitales</h3><p>Usaremos Canva, CapCut, Instagram y WhatsApp para crear, editar y compartir el contenido.</p></div>
+        </div>
+        <div class="servicio-bloque">
+          <span class="icono">🎬</span>
+          <div><h3>Contenido visual</h3><p>Haremos videos cortos, fotos y publicaciones atractivas con un lenguaje claro y cercano.</p></div>
+        </div>
+        <div class="servicio-bloque">
+          <span class="icono">📡</span>
+          <div><h3>Canales de difusión</h3><p>Compartiremos el contenido en Instagram, WhatsApp y en los canales digitales para llegar a más personas.</p></div>
+        </div>
+        <div class="tech-chips">
+          <span>🎨 Canva</span>
+          <span>✂️ CapCut</span>
+          <span>📸 Instagram</span>
+          <span>💬 WhatsApp</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ 8. MISIÓN Y VISIÓN ═══ -->
+    <section class="slide" data-bg="8">
+      <div class="slide-inner">
+        <p class="seccion-num">07 — Nuestra identidad</p>
+        <h2>Misión & Visión</h2>
+        <div class="mv-grid">
+          <div class="mv-card">
+            <h3>Misión</h3>
+            <p>Brindar servicios de creación y administración de contenido digital para un taller de motos, con el fin de mejorar su presencia en redes sociales y atraer más clientes. A través de videos, publicaciones y promociones, buscamos fortalecer la comunicación con los clientes y mostrar de manera atractiva los servicios del taller.</p>
+          </div>
+          <div class="mv-card">
+            <h3>Visión</h3>
+            <p>Ser una página reconocida por los amantes de las motocicletas, destacándonos por ofrecer contenido, productos y servicios que mejoren el rendimiento, el estilo y el cuidado de las motos, convirtiéndonos en una referencia para la comunidad motociclista.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ 9. PRODUCTOS/SERVICIOS ═══ -->
+    <section class="slide" data-bg="9">
+      <div class="slide-inner">
+        <p class="seccion-num">08 — Lo que vamos a construir</p>
+        <h2>Descripción de <span>productos y servicios</span></h2>
+        <div class="servicio-bloque">
+          <span class="icono">💻</span>
+          <div><h3>Portal Web Mecánico</h3><p>Sitio web con catálogo de repuestos, agenda de citas de mantenimiento en línea y blog/videos de consejos mecánicos.</p></div>
+        </div>
+        <div class="servicio-bloque">
+          <span class="icono">🔩</span>
+          <div><h3>Piezas Gráficas</h3><p>Infografías de mantenimiento preventivo y videos de antes/después de reparaciones.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ 10. IMAGEN CORPORATIVA ═══ -->
+    <section class="slide" data-bg="10">
+      <div class="slide-inner">
+        <p class="seccion-num">09 — Nuestra marca</p>
+        <h2>Imagen <span>Corporativa</span></h2>
+        <div class="dos-col">
+          <p class="lead">
+            Nuestro estilo técnico y moderno se refleja en colores negro, plata, gris y naranja, con tipografías gruesas y sólidas que transmiten fuerza, profesionalismo y confianza. Líneas modernas, deportivas y detalles en naranja conforman un estilo visual técnico, deportivo y enfocado en el mundo de las motos.
+          </p>
+          <img src="../img/logo.png" alt="Logo MPG — Motorcycle Performance Garage" style="max-height:260px; object-fit:contain; background:var(--grafito); padding:1.5rem;" />
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ 11. ETIQUETA Y EMPAQUE ═══ -->
+    <section class="slide" data-bg="11">
+      <div class="slide-inner">
+        <p class="seccion-num">10 — Presentación del producto</p>
+        <h2>Etiqueta y <span>Empaque</span></h2>
+        <div class="dos-col invertido">
+          <img src="img/sticker.jpg" alt="Sticker MPG adherido a una motocicleta" />
+          <div class="col-texto">
+            <p class="lead" style="margin-bottom:.8rem;">Stickers de vinilo de alta adherencia con el logo MPG, diseñados para pegar en las motocicletas de los clientes.</p>
+            <div class="tech-chips">
+              <span>✅ Resistentes</span>
+              <span>💎 Alta calidad</span>
+              <span>🏍️ Fácil aplicación</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ 12. SEGMENTO OBJETIVO ═══ -->
+    <section class="slide" data-bg="12">
+      <div class="slide-inner">
+        <p class="seccion-num">11 — A quién llegamos</p>
+        <h2>Segmento <span>Objetivo</span></h2>
+        <div class="segmento-grid">
+          <div class="segmento-card">
+            <span class="icono">📍</span>
+            <h3>Ubicación</h3>
+            <p>Calle 10b #3-113 local 102, Trapiches — Villa del Rosario, Norte de Santander.</p>
+          </div>
+          <div class="segmento-card">
+            <span class="icono">🏍️</span>
+            <h3>Perfil</h3>
+            <p>Hombres y mujeres adultos: repartidores, motociclistas urbanos y de alto cilindraje.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ 13. VENTAJAS COMPETITIVAS ═══ -->
+    <section class="slide" data-bg="13">
+      <div class="slide-inner">
+        <p class="seccion-num">12 — Lo que nos distingue</p>
+        <h2>Ventajas <span>Competitivas</span></h2>
+        <div class="dos-col">
+          <p class="lead">
+            Contamos con un amplio sistema de agendamiento web de citas, sin filas, con guías visuales de diagnóstico de fallas y testimonios en video — ahorrando tiempo y brindando más confianza en cada servicio.
+          </p>
+          <img src="img/ventajas-moto.jpg" alt="Motocicleta de cliente frente al taller MPG" />
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ 14. PUBLICIDAD EN INSTAGRAM ═══ -->
+    <section class="slide" data-bg="14">
+      <div class="slide-inner">
+        <p class="seccion-num">13 — Cómo lo damos a conocer</p>
+        <h2>Publicidad en <span>Instagram</span></h2>
+        <div class="dos-col invertido">
+          <img src="img/instagram.jpg" alt="Perfil de Instagram de Motorcycle Performance Garage" />
+          <p class="lead">
+            Usamos Instagram para mostrar nuestros productos, servicios y promociones, con contenido visual atractivo y de calidad — logrando mayor alcance, conexión directa con los clientes y más visibilidad para el taller.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ 15. PALETA DE COLORES ═══ -->
+    <section class="slide" data-bg="15">
+      <div class="slide-inner">
+        <p class="seccion-num">14 — Nuestra identidad visual</p>
+        <h2>Paleta de <span>colores</span></h2>
+        <div class="paleta-grid">
+          <div class="paleta-chip"><div class="swatch" style="background:#e8620a;"></div><div class="info"><div class="nombre">Naranja</div><div class="hex">#E8620A</div></div></div>
+          <div class="paleta-chip"><div class="swatch" style="background:#ff7620;"></div><div class="info"><div class="nombre">Naranja vivo</div><div class="hex">#FF7620</div></div></div>
+          <div class="paleta-chip"><div class="swatch" style="background:#080808; border-bottom:1px solid var(--acero);"></div><div class="info"><div class="nombre">Negro</div><div class="hex">#080808</div></div></div>
+          <div class="paleta-chip"><div class="swatch" style="background:#141414; border-bottom:1px solid var(--acero);"></div><div class="info"><div class="nombre">Grafito</div><div class="hex">#141414</div></div></div>
+          <div class="paleta-chip"><div class="swatch" style="background:#252525; border-bottom:1px solid var(--acero);"></div><div class="info"><div class="nombre">Acero</div><div class="hex">#252525</div></div></div>
+          <div class="paleta-chip"><div class="swatch" style="background:#ffffff;"></div><div class="info"><div class="nombre">Blanco</div><div class="hex">#FFFFFF</div></div></div>
+        </div>
+        <div class="fuentes-row">
+          <div class="fuente-card"><div class="muestra racing">MPG Racing</div><div class="etiqueta-fuente">Barlow Condensed · títulos</div></div>
+          <div class="fuente-card"><div class="muestra tech">90+ Servicios</div><div class="etiqueta-fuente">Rajdhani · datos técnicos</div></div>
+          <div class="fuente-card"><div class="muestra body">Taller de motos</div><div class="etiqueta-fuente">Inter · cuerpo de texto</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ 16. CIERRE ═══ -->
+    <section class="slide" data-bg="16">
+      <div class="slide-inner final">
+        <img class="logo-final" src="../img/logo.png" alt="MPG — Motorcycle Performance Garage" />
+        <p class="label">Gracias por su atención</p>
+        <h2>¡Gracias!</h2>
+        <p class="subt">Motorcycle Performance Garage — más que un taller, una comunidad motera.<br>Técnica en Integración de Contenidos Digitales · SENA.</p>
+        <a class="whatsapp-final" href="https://wa.me/573044709863" target="_blank" rel="noopener noreferrer">💬 304 4709863</a>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ═══ Controles de navegación ═══ -->
+  <div class="nav-controles">
+    <button class="nav-btn" id="btnPrev" aria-label="Diapositiva anterior">‹</button>
+    <div class="nav-puntos" id="navPuntos"></div>
+    <button class="nav-btn" id="btnNext" aria-label="Siguiente diapositiva">›</button>
+    <span class="nav-contador" id="navContador">1 / 16</span>
+  </div>
+
+  <script>
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    const total = slides.length;
+    let actual = 0;
+
+    const puntosWrap = document.getElementById('navPuntos');
+    slides.forEach((_, i) => {
+      const btn = document.createElement('button');
+      btn.className = 'nav-punto' + (i === 0 ? ' activo' : '');
+      btn.setAttribute('aria-label', `Ir a la diapositiva ${i + 1}`);
+      btn.addEventListener('click', () => irA(i));
+      puntosWrap.appendChild(btn);
+    });
+    const puntos = Array.from(document.querySelectorAll('.nav-punto'));
+
+    function actualizarUI() {
+      puntos.forEach((p, i) => p.classList.toggle('activo', i === actual));
+      document.getElementById('navContador').textContent = `${actual + 1} / ${total}`;
+      document.getElementById('btnPrev').classList.toggle('deshabilitado', actual === 0);
+      document.getElementById('btnNext').classList.toggle('deshabilitado', actual === total - 1);
+    }
+
+    function irA(indice) {
+      indice = Math.max(0, Math.min(total - 1, indice));
+      if (indice === actual) return;
+      const direccion = indice > actual ? 1 : -1;
+
+      slides.forEach((s, i) => {
+        s.classList.remove('activa', 'saliendo-izq', 'saliendo-der');
+        if (i === actual) {
+          s.classList.add(direccion > 0 ? 'saliendo-izq' : 'saliendo-der');
+        }
+      });
+
+      actual = indice;
+      slides[actual].classList.add('activa');
+      actualizarUI();
+    }
+
+    slides[0].classList.add('activa');
+    actualizarUI();
+
+    document.getElementById('btnPrev').addEventListener('click', () => irA(actual - 1));
+    document.getElementById('btnNext').addEventListener('click', () => irA(actual + 1));
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ') irA(actual + 1);
+      if (e.key === 'ArrowLeft') irA(actual - 1);
+    });
+
+    /* Navegación táctil (swipe horizontal) */
+    let touchStartX = 0, touchStartY = 0;
+    const deck = document.getElementById('deck');
+
+    deck.addEventListener('touchstart', (e) => {
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+    }, { passive: true });
+
+    deck.addEventListener('touchend', (e) => {
+      const dx = e.changedTouches[0].clientX - touchStartX;
+      const dy = e.changedTouches[0].clientY - touchStartY;
+      if (Math.abs(dx) > 55 && Math.abs(dx) > Math.abs(dy)) {
+        if (dx < 0) irA(actual + 1); else irA(actual - 1);
+      }
+    }, { passive: true });
+  </script>
+
+</body>
+</html>
