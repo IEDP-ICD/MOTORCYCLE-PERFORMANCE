@@ -1360,6 +1360,87 @@
     .footer-contacto span { color: var(--naranja); }
 
     /* ═══════════════════════════════════════════════════════════
+       MINIJUEGO — MOTO RUNNER
+       ═══════════════════════════════════════════════════════════ */
+    .seccion-juego { background: var(--negro); }
+
+    .juego-wrap {
+      position: relative;
+      border: 2px solid var(--acero);
+      border-radius: var(--radio-lg);
+      overflow: hidden;
+      box-shadow: var(--sombra-md);
+      background: var(--grafito);
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .juego-canvas {
+      display: block;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 900 / 260;
+      background: linear-gradient(to bottom, #0c0c0c 0%, #131313 60%, #191919 100%);
+      cursor: pointer;
+      touch-action: manipulation;
+    }
+    .juego-canvas:focus { outline: none; }
+    .juego-canvas:focus-visible { outline: 2px solid var(--naranja); outline-offset: -2px; }
+
+    .juego-hud {
+      position: absolute;
+      top: 0.9rem;
+      left: 0; right: 0;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 1.2rem;
+      pointer-events: none;
+      font-family: var(--font-tech);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--blanco-60);
+    }
+    .juego-hud-item b { color: var(--blanco); font-weight: 700; margin-left: 4px; }
+    .juego-hud-record b { color: var(--naranja); }
+
+    .juego-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      text-align: center;
+      padding: 1.5rem;
+      background: rgba(8,8,8,0.82);
+      backdrop-filter: blur(2px);
+      transition: opacity 0.25s ease;
+    }
+    .juego-overlay.oculto { opacity: 0; pointer-events: none; }
+
+    .juego-overlay-emoji { font-size: 2.6rem; line-height: 1; margin-bottom: 0.2rem; }
+
+    .juego-overlay-titulo {
+      font-family: var(--font-racing);
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      color: var(--blanco);
+      text-transform: uppercase;
+    }
+
+    .juego-overlay-texto {
+      font-size: 0.85rem;
+      color: var(--gris);
+      max-width: 360px;
+    }
+    .juego-overlay-texto b { color: var(--naranja); }
+
+    .juego-btn { margin-top: 0.8rem; }
+
+    /* ═══════════════════════════════════════════════════════════
        RESPONSIVE
        ═══════════════════════════════════════════════════════════ */
     @media (max-width: 900px) {
@@ -1378,6 +1459,8 @@
       .seccion { padding: 4rem 0; }
       #videos-grid { grid-template-columns: 1fr; }
       #catalogo-grid { grid-template-columns: 1fr; }
+      .juego-hud { font-size: 0.62rem; top: 0.6rem; padding: 0 0.8rem; }
+      .juego-overlay-texto { font-size: 0.78rem; }
     }
   </style>
 </head>
@@ -1470,6 +1553,38 @@
       <div class="stat-label" id="stat4-label">Garantía</div>
     </div>
   </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+       MINIJUEGO — MOTO RUNNER
+       Salta rampas y obstáculos con la barra espaciadora (o toca en móvil)
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="seccion seccion-juego" id="juego">
+    <div class="contenedor">
+      <div class="seccion-header">
+        <div class="seccion-num">00 — MODO ARCADE</div>
+        <h2>ESQUIVA Y <span>ACELERA</span></h2>
+        <p>Pon a prueba tus reflejos: salta rampas y obstáculos con la barra espaciadora.</p>
+      </div>
+
+      <div class="juego-wrap">
+        <canvas id="motoCanvas" class="juego-canvas" tabindex="0"
+          aria-label="Juego de la moto: presiona espacio o toca la pantalla para saltar rampas y obstáculos"></canvas>
+
+        <div class="juego-hud">
+          <span class="juego-hud-item">PUNTAJE <b id="juegoScore">000000</b></span>
+          <span class="juego-hud-item juego-hud-record">RÉCORD <b id="juegoRecord">000000</b></span>
+        </div>
+
+        <div class="juego-overlay" id="juegoOverlay">
+          <p class="juego-overlay-emoji">🏍️</p>
+          <p class="juego-overlay-titulo" id="juegoOverlayTitulo">MOTO RUNNER</p>
+          <p class="juego-overlay-texto" id="juegoOverlayTexto">Presiona <b>ESPACIO</b> o toca la pantalla para saltar</p>
+          <button class="btn-naranja juego-btn" id="juegoBtn" type="button">▶ JUGAR</button>
+        </div>
+      </div>
+    </div>
+  </section>
 
 
   <!-- ═══════════════════════════════════════════════════════════
@@ -2061,6 +2176,390 @@
                .replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
     }
 
+  </script>
+
+  <!-- ════════════════════════════════════════════════════════════
+       MINIJUEGO — MOTO RUNNER
+       Estilo "dinosaurio sin internet" de Chrome, con una moto.
+       Salta rampas y obstáculos con la barra espaciadora (o toca / clic).
+       ════════════════════════════════════════════════════════════ -->
+  <script>
+  (function () {
+    const canvas = document.getElementById('motoCanvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+
+    const overlay        = document.getElementById('juegoOverlay');
+    const overlayTitulo   = document.getElementById('juegoOverlayTitulo');
+    const overlayTexto    = document.getElementById('juegoOverlayTexto');
+    const btnJugar        = document.getElementById('juegoBtn');
+    const scoreEl          = document.getElementById('juegoScore');
+    const recordEl         = document.getElementById('juegoRecord');
+
+    /* ─── Resolución lógica del canvas (se escala con CSS) ─── */
+    const W = 900, H = 260;
+    const GROUND_Y = 208;
+
+    function ajustarResolucion() {
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = W * dpr;
+      canvas.height = H * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    ajustarResolucion();
+    window.addEventListener('resize', ajustarResolucion);
+
+    /* ─── Récord persistente ─── */
+    const RECORD_KEY = 'mpgMotoRunnerRecord';
+    let record = parseInt(localStorage.getItem(RECORD_KEY) || '0', 10) || 0;
+    recordEl.textContent = formatear(record);
+
+    /* ─── Estado del juego ─── */
+    const GRAVEDAD = 2400;      // px/s²
+    const FUERZA_SALTO = -800;  // px/s
+    const VELOCIDAD_BASE = 320; // px/s
+    const VELOCIDAD_MAX = 720;  // px/s
+
+    let estado = 'listo'; // 'listo' | 'jugando' | 'fin'
+    let moto, obstaculos, montanas, score, velocidad, spawnTimer, ultimoTs, distanciaSuelo;
+
+    function reiniciar() {
+      moto = {
+        x: 66, ancho: 58, alto: 40,
+        y: GROUND_Y - 40,
+        velY: 0,
+        enSuelo: true,
+        angulo: 0
+      };
+      obstaculos = [];
+      montanas = [];
+      for (let i = 0; i < 6; i++) {
+        montanas.push({ x: i * 220, alto: 40 + Math.random() * 50, ancho: 140 + Math.random() * 80 });
+      }
+      score = 0;
+      velocidad = VELOCIDAD_BASE;
+      spawnTimer = 900;
+      distanciaSuelo = 0;
+      ultimoTs = null;
+    }
+
+    function saltar() {
+      if (estado === 'jugando' && moto.enSuelo) {
+        moto.velY = FUERZA_SALTO;
+        moto.enSuelo = false;
+      }
+    }
+
+    function iniciarJuego() {
+      reiniciar();
+      estado = 'jugando';
+      overlay.classList.add('oculto');
+      requestAnimationFrame(loop);
+    }
+
+    function terminarJuego() {
+      estado = 'fin';
+      const puntajeFinal = Math.floor(score);
+      if (puntajeFinal > record) {
+        record = puntajeFinal;
+        localStorage.setItem(RECORD_KEY, String(record));
+        recordEl.textContent = formatear(record);
+      }
+      overlayTitulo.textContent = '¡CHOCASTE!';
+      overlayTexto.innerHTML = `Puntaje: <b>${formatear(puntajeFinal)}</b> — Presiona <b>ESPACIO</b> para volver a intentar`;
+      btnJugar.textContent = '↻ REINTENTAR';
+      overlay.classList.remove('oculto');
+    }
+
+    function formatear(n) {
+      return String(Math.max(0, Math.floor(n))).padStart(6, '0');
+    }
+
+    /* ─── Generación de obstáculos ─── */
+    const TIPOS = ['cono', 'tambor', 'rampa'];
+
+    function generarObstaculo() {
+      const tipo = TIPOS[Math.floor(Math.random() * TIPOS.length)];
+      let ancho, alto;
+      if (tipo === 'cono')   { ancho = 24; alto = 34; }
+      if (tipo === 'tambor') { ancho = 32; alto = 44; }
+      if (tipo === 'rampa')  { ancho = 52; alto = 32; }
+      obstaculos.push({ tipo, x: W + 20, ancho, alto, y: GROUND_Y - alto });
+    }
+
+    /* ─── Actualización ─── */
+    function actualizar(dt) {
+      // dt en segundos, acotado para evitar saltos si la pestaña estuvo inactiva
+      dt = Math.min(dt, 0.05);
+
+      velocidad = Math.min(VELOCIDAD_MAX, VELOCIDAD_BASE + score * 0.12);
+      score += dt * 12;
+      scoreEl.textContent = formatear(score);
+
+      // Física de la moto
+      moto.velY += GRAVEDAD * dt;
+      moto.y += moto.velY * dt;
+      if (moto.y >= GROUND_Y - moto.alto) {
+        moto.y = GROUND_Y - moto.alto;
+        moto.velY = 0;
+        moto.enSuelo = true;
+      }
+      moto.angulo = moto.enSuelo ? 0 : Math.max(-0.22, Math.min(0.18, moto.velY / 3600));
+
+      // Montañas de fondo (parallax)
+      for (const m of montanas) {
+        m.x -= velocidad * 0.15 * dt;
+        if (m.x < -m.ancho) m.x += montanas.length * 220;
+      }
+
+      // Textura del suelo
+      distanciaSuelo = (distanciaSuelo + velocidad * dt) % 40;
+
+      // Obstáculos
+      spawnTimer -= dt * 1000;
+      if (spawnTimer <= 0) {
+        generarObstaculo();
+        const rango = Math.max(420, 950 - velocidad * 0.7);
+        spawnTimer = rango * 0.6 + Math.random() * rango * 0.7;
+      }
+
+      const motoHitbox = {
+        x: moto.x + 10, y: moto.y + 8,
+        ancho: moto.ancho - 18, alto: moto.alto - 12
+      };
+
+      for (let i = obstaculos.length - 1; i >= 0; i--) {
+        const o = obstaculos[i];
+        o.x -= velocidad * dt;
+        if (o.x + o.ancho < -10) { obstaculos.splice(i, 1); continue; }
+
+        const oHitbox = { x: o.x + 3, y: o.y + 2, ancho: o.ancho - 6, alto: o.alto - 2 };
+        if (
+          motoHitbox.x < oHitbox.x + oHitbox.ancho &&
+          motoHitbox.x + motoHitbox.ancho > oHitbox.x &&
+          motoHitbox.y < oHitbox.y + oHitbox.alto &&
+          motoHitbox.y + motoHitbox.alto > oHitbox.y
+        ) {
+          terminarJuego();
+        }
+      }
+    }
+
+    /* ─── Dibujo ─── */
+    function dibujarFondo() {
+      ctx.clearRect(0, 0, W, H);
+
+      // Cielo con resplandor sutil
+      const grad = ctx.createLinearGradient(0, 0, 0, GROUND_Y);
+      grad.addColorStop(0, '#0c0c0c');
+      grad.addColorStop(1, '#161616');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, W, GROUND_Y);
+
+      // Montañas (parallax)
+      ctx.fillStyle = '#1c1c1c';
+      for (const m of montanas) {
+        ctx.beginPath();
+        ctx.moveTo(m.x, GROUND_Y);
+        ctx.lineTo(m.x + m.ancho / 2, GROUND_Y - m.alto);
+        ctx.lineTo(m.x + m.ancho, GROUND_Y);
+        ctx.closePath();
+        ctx.fill();
+      }
+
+      // Línea de meta a cuadros (decorativa, cerca del borde superior del suelo)
+      const cuadro = 10;
+      for (let x = 0; x < W; x += cuadro) {
+        ctx.fillStyle = (Math.floor(x / cuadro) % 2 === 0) ? 'rgba(255,255,255,0.05)' : 'rgba(232,98,10,0.05)';
+        ctx.fillRect(x, GROUND_Y - 2, cuadro, 2);
+      }
+
+      // Suelo
+      ctx.fillStyle = '#0a0a0a';
+      ctx.fillRect(0, GROUND_Y, W, H - GROUND_Y);
+      ctx.strokeStyle = 'rgba(232,98,10,0.5)';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(0, GROUND_Y);
+      ctx.lineTo(W, GROUND_Y);
+      ctx.stroke();
+
+      // Guiones de movimiento sobre el suelo
+      ctx.strokeStyle = 'rgba(255,255,255,0.12)';
+      ctx.lineWidth = 2;
+      ctx.setLineDash([16, 18]);
+      ctx.lineDashOffset = -distanciaSuelo;
+      ctx.beginPath();
+      ctx.moveTo(0, GROUND_Y + 14);
+      ctx.lineTo(W, GROUND_Y + 14);
+      ctx.stroke();
+      ctx.setLineDash([]);
+    }
+
+    function dibujarObstaculo(o) {
+      if (o.tipo === 'cono') {
+        ctx.fillStyle = '#e8620a';
+        ctx.beginPath();
+        ctx.moveTo(o.x + o.ancho / 2, o.y);
+        ctx.lineTo(o.x + o.ancho, o.y + o.alto);
+        ctx.lineTo(o.x, o.y + o.alto);
+        ctx.closePath();
+        ctx.fill();
+        ctx.fillStyle = '#fff';
+        ctx.fillRect(o.x + o.ancho * 0.18, o.y + o.alto * 0.55, o.ancho * 0.64, 4);
+      } else if (o.tipo === 'tambor') {
+        ctx.fillStyle = '#252525';
+        ctx.fillRect(o.x, o.y, o.ancho, o.alto);
+        ctx.fillStyle = '#e8620a';
+        ctx.fillRect(o.x, o.y + o.alto * 0.28, o.ancho, 5);
+        ctx.fillRect(o.x, o.y + o.alto * 0.68, o.ancho, 5);
+        ctx.strokeStyle = '#3a3a3a';
+        ctx.strokeRect(o.x, o.y, o.ancho, o.alto);
+      } else { // rampa
+        ctx.fillStyle = '#333';
+        ctx.beginPath();
+        ctx.moveTo(o.x, o.y + o.alto);
+        ctx.lineTo(o.x + o.ancho * 0.75, o.y);
+        ctx.lineTo(o.x + o.ancho, o.y);
+        ctx.lineTo(o.x + o.ancho, o.y + o.alto);
+        ctx.closePath();
+        ctx.fill();
+        ctx.strokeStyle = '#e8620a';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(o.x, o.y + o.alto);
+        ctx.lineTo(o.x + o.ancho * 0.75, o.y);
+        ctx.stroke();
+      }
+    }
+
+    function dibujarMoto() {
+      ctx.save();
+      const cx = moto.x + moto.ancho / 2;
+      const cy = moto.y + moto.alto / 2;
+      ctx.translate(cx, cy);
+      ctx.rotate(moto.angulo);
+      ctx.translate(-cx, -cy);
+
+      const bx = moto.x, by = moto.y, bw = moto.ancho, bh = moto.alto;
+
+      // Sombra de contacto (se desvanece en el aire)
+      if (moto.enSuelo) {
+        ctx.fillStyle = 'rgba(0,0,0,0.4)';
+        ctx.beginPath();
+        ctx.ellipse(cx, GROUND_Y + 5, bw * 0.42, 5, 0, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      // Ruedas
+      ctx.fillStyle = '#111';
+      ctx.strokeStyle = '#e8620a';
+      ctx.lineWidth = 2.5;
+      [bx + bw * 0.2, bx + bw * 0.86].forEach((wx) => {
+        ctx.beginPath();
+        ctx.arc(wx, by + bh - 8, 8, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+      });
+
+      // Cuerpo / chasis
+      ctx.fillStyle = '#e8620a';
+      ctx.beginPath();
+      ctx.moveTo(bx + bw * 0.16, by + bh - 10);
+      ctx.lineTo(bx + bw * 0.30, by + bh * 0.42);
+      ctx.lineTo(bx + bw * 0.62, by + bh * 0.30);
+      ctx.lineTo(bx + bw * 0.90, by + bh - 10);
+      ctx.lineTo(bx + bw * 0.70, by + bh - 10);
+      ctx.lineTo(bx + bw * 0.58, by + bh * 0.62);
+      ctx.lineTo(bx + bw * 0.34, by + bh * 0.62);
+      ctx.lineTo(bx + bw * 0.24, by + bh - 10);
+      ctx.closePath();
+      ctx.fill();
+
+      // Asiento / piloto (silueta simple)
+      ctx.fillStyle = '#141414';
+      ctx.fillRect(bx + bw * 0.44, by + bh * 0.06, bw * 0.14, bh * 0.28);
+      ctx.beginPath();
+      ctx.arc(bx + bw * 0.5, by + bh * 0.02, 7, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Manubrio
+      ctx.strokeStyle = '#1c1c1c';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(bx + bw * 0.86, by + bh * 0.30);
+      ctx.lineTo(bx + bw * 0.98, by + bh * 0.18);
+      ctx.stroke();
+
+      ctx.restore();
+    }
+
+    function dibujar() {
+      dibujarFondo();
+      for (const o of obstaculos) dibujarObstaculo(o);
+      dibujarMoto();
+    }
+
+    /* ─── Bucle principal ─── */
+    function loop(ts) {
+      if (estado !== 'jugando') return;
+      if (ultimoTs === null) ultimoTs = ts;
+      const dt = (ts - ultimoTs) / 1000;
+      ultimoTs = ts;
+
+      actualizar(dt);
+      dibujar();
+
+      requestAnimationFrame(loop);
+    }
+
+    /* ─── Fotograma estático de bienvenida ─── */
+    reiniciar();
+    dibujar();
+
+    /* ─── Controles ───
+       El listener de teclado vive en el propio canvas (requiere foco),
+       así el espacio nunca interfiere con el scroll normal de la página. */
+    function manejarAccion() {
+      if (estado === 'listo' || estado === 'fin') {
+        iniciarJuego();
+      } else {
+        saltar();
+      }
+    }
+
+    canvas.addEventListener('keydown', (e) => {
+      if (e.code === 'Space' || e.key === ' ' || e.key === 'Spacebar') {
+        e.preventDefault();
+        manejarAccion();
+      }
+    });
+
+    canvas.addEventListener('pointerdown', () => {
+      canvas.focus();
+      manejarAccion();
+    });
+
+    // El overlay (pantalla de inicio / fin de juego) cubre el canvas,
+    // así que también debe reaccionar al toque, no solo el botón.
+    overlay.addEventListener('pointerdown', () => {
+      canvas.focus();
+      manejarAccion();
+    });
+
+    btnJugar.addEventListener('click', (e) => {
+      e.stopPropagation();
+      canvas.focus();
+      iniciarJuego();
+    });
+
+    // Pausa segura si la pestaña deja de estar visible
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden && estado === 'jugando') {
+        ultimoTs = null; // evita un salto de dt gigante al volver
+      }
+    });
+  })();
   </script>
 
 </body>
