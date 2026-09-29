@@ -2214,11 +2214,12 @@
     let record = parseInt(localStorage.getItem(RECORD_KEY) || '0', 10) || 0;
     recordEl.textContent = formatear(record);
 
-    /* ─── Estado del juego ─── */
-    const GRAVEDAD = 2400;      // px/s²
-    const FUERZA_SALTO = -800;  // px/s
-    const VELOCIDAD_BASE = 320; // px/s
-    const VELOCIDAD_MAX = 720;  // px/s
+    /* ─── Estado del juego (nivel fácil) ─── */
+    const GRAVEDAD = 2200;          // px/s²
+    const FUERZA_SALTO = -760;      // px/s — salto manual (barra espaciadora)
+    const FUERZA_SALTO_RAMPA = -840; // px/s — impulso automático al subir una rampa
+    const VELOCIDAD_BASE = 230;     // px/s
+    const VELOCIDAD_MAX = 470;      // px/s
 
     let estado = 'listo'; // 'listo' | 'jugando' | 'fin'
     let moto, obstaculos, montanas, score, velocidad, spawnTimer, ultimoTs, distanciaSuelo;
@@ -2238,7 +2239,7 @@
       }
       score = 0;
       velocidad = VELOCIDAD_BASE;
-      spawnTimer = 900;
+      spawnTimer = 1600;
       distanciaSuelo = 0;
       ultimoTs = null;
     }
@@ -2275,16 +2276,18 @@
       return String(Math.max(0, Math.floor(n))).padStart(6, '0');
     }
 
-    /* ─── Generación de obstáculos ─── */
-    const TIPOS = ['cono', 'tambor', 'rampa'];
-
+    /* ─── Generación de obstáculos ───
+       'cono' y 'tambor' hay que saltarlos con la barra espaciadora.
+       'rampa' es distinta: la moto la sube y salta sola, automáticamente,
+       sin que el jugador tenga que reaccionar ni pueda chocar con ella. */
     function generarObstaculo() {
-      const tipo = TIPOS[Math.floor(Math.random() * TIPOS.length)];
+      const r = Math.random();
+      const tipo = r < 0.42 ? 'cono' : (r < 0.72 ? 'tambor' : 'rampa');
       let ancho, alto;
       if (tipo === 'cono')   { ancho = 24; alto = 34; }
       if (tipo === 'tambor') { ancho = 32; alto = 44; }
-      if (tipo === 'rampa')  { ancho = 52; alto = 32; }
-      obstaculos.push({ tipo, x: W + 20, ancho, alto, y: GROUND_Y - alto });
+      if (tipo === 'rampa')  { ancho = 60; alto = 34; }
+      obstaculos.push({ tipo, x: W + 20, ancho, alto, y: GROUND_Y - alto, activada: false });
     }
 
     /* ─── Actualización ─── */
@@ -2292,7 +2295,7 @@
       // dt en segundos, acotado para evitar saltos si la pestaña estuvo inactiva
       dt = Math.min(dt, 0.05);
 
-      velocidad = Math.min(VELOCIDAD_MAX, VELOCIDAD_BASE + score * 0.12);
+      velocidad = Math.min(VELOCIDAD_MAX, VELOCIDAD_BASE + score * 0.05);
       score += dt * 12;
       scoreEl.textContent = formatear(score);
 
@@ -2315,12 +2318,12 @@
       // Textura del suelo
       distanciaSuelo = (distanciaSuelo + velocidad * dt) % 40;
 
-      // Obstáculos
+      // Obstáculos — separados generosamente para nivel fácil
       spawnTimer -= dt * 1000;
       if (spawnTimer <= 0) {
         generarObstaculo();
-        const rango = Math.max(420, 950 - velocidad * 0.7);
-        spawnTimer = rango * 0.6 + Math.random() * rango * 0.7;
+        const rango = Math.max(1100, 1900 - velocidad * 0.9);
+        spawnTimer = rango * 0.85 + Math.random() * rango * 0.55;
       }
 
       const motoHitbox = {
@@ -2332,6 +2335,16 @@
         const o = obstaculos[i];
         o.x -= velocidad * dt;
         if (o.x + o.ancho < -10) { obstaculos.splice(i, 1); continue; }
+
+        if (o.tipo === 'rampa') {
+          // La rampa impulsa a la moto automáticamente, no hay que saltarla a mano
+          if (!o.activada && moto.enSuelo && moto.x + moto.ancho >= o.x + o.ancho * 0.12) {
+            o.activada = true;
+            moto.velY = FUERZA_SALTO_RAMPA;
+            moto.enSuelo = false;
+          }
+          continue;
+        }
 
         const oHitbox = { x: o.x + 3, y: o.y + 2, ancho: o.ancho - 6, alto: o.alto - 2 };
         if (
