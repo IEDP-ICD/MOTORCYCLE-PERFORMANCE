@@ -188,6 +188,9 @@
     .dos-col img { width: 100%; height: auto; max-height: clamp(200px, 40vh, 400px); object-fit: cover; border: 1px solid var(--acero); box-shadow: var(--sombra-md); }
     .col-texto { display: flex; flex-direction: column; justify-content: center; gap: 0.8rem; min-width: 0; }
 
+    /* Captura de perfil — retrato, se muestra completa en lugar de recortarla */
+    .redes-col img { width: auto; max-width: 100%; height: clamp(260px, 58vh, 580px); max-height: none; object-fit: contain; background: var(--grafito); padding: .6rem; margin: 0 auto; }
+
     .dos-tarjetas { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
 
     /* Objetivo general destacado */
@@ -357,6 +360,7 @@
       .dos-tarjetas, .mv-grid, .segmento-grid { grid-template-columns: 1fr; }
       .dos-col, .dos-col.invertido { grid-template-columns: 1fr; gap: .7rem; }
       .dos-col img { max-height: clamp(95px, 17vh, 180px); }
+      .redes-col img { height: clamp(180px, 34vh, 320px); max-height: none; }
       .col-texto { gap: .5rem; }
 
       .portada h1 { font-size: clamp(2.2rem, 11.5vw, 3.6rem); }
@@ -426,6 +430,7 @@
       .miembro-foto { width: 56px; height: 56px; margin-bottom: .4rem; }
       .miembro-desc { display: none; }
       .dos-col img { max-height: 26vh; }
+      .redes-col img { height: 34vh; max-height: none; }
       .tarjeta { padding: .6rem .9rem; }
       .tarjeta p { font-size: clamp(1rem, 2.2vh, 1.15rem); }
       .costo-item .desc { font-size: clamp(.85rem, 2vh, 1.05rem); }
@@ -715,7 +720,7 @@
       <div class="slide-inner">
         <p class="seccion-num">14 — Cómo lo damos a conocer</p>
         <h2>Publicidad en <span>Redes Sociales</span></h2>
-        <div class="dos-col invertido">
+        <div class="dos-col invertido redes-col">
           <img src="img/instagram.jpg" alt="Perfil de Instagram de Motorcycle Performance Garage" />
           <p class="lead">
             Usamos Instagram, TikTok y WhatsApp para mostrar nuestros productos, servicios y promociones, con contenido visual atractivo y de calidad. WhatsApp además es nuestro canal directo de atención al público — logrando mayor alcance, conexión directa con los clientes y más visibilidad para el taller.
