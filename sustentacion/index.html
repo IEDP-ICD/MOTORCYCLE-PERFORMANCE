@@ -256,6 +256,68 @@
     .fuente-card .muestra.body { font-family: var(--font-body); font-weight: 400; color: var(--blanco-90); }
     .fuente-card .etiqueta-fuente { font-family: var(--font-tech); font-size: .88rem; color: var(--blanco-30); letter-spacing: .09em; text-transform: uppercase; }
 
+    /* ═══ Informe de costos y gastos ═══ */
+    .costos-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 2.2rem; width: 100%; }
+    .costo-item {
+      display: flex; justify-content: space-between; align-items: baseline; gap: .8rem;
+      border-bottom: 1px solid var(--acero); padding: .5rem 0;
+    }
+    .costo-item .desc { font-family: var(--font-body); font-weight: 300; font-size: 1.32rem; color: var(--blanco-90); line-height: 1.25; }
+    .costo-item .valor { font-family: var(--font-tech); font-weight: 700; font-size: 1.36rem; color: var(--naranja-vivo); white-space: nowrap; flex-shrink: 0; }
+    .costos-total {
+      display: flex; justify-content: space-between; align-items: center; width: 100%;
+      background: linear-gradient(135deg, rgba(232,98,10,0.16), rgba(232,98,10,0.04));
+      border: 1px solid var(--naranja-oscuro); padding: 1rem 1.7rem; margin-top: 1.1rem;
+    }
+    .costos-total .etiqueta { font-family: var(--font-tech); font-weight: 700; letter-spacing: .12em; text-transform: uppercase; font-size: 1.2rem; color: var(--naranja); }
+    .costos-total .monto { font-family: var(--font-racing); font-weight: 900; font-size: clamp(1.7rem, 4vh, 2.3rem); color: var(--blanco); }
+
+    /* ═══ Visita nuestro sitio web — código QR ═══ */
+    .qr-slide-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 2.4rem; align-items: center; }
+    .cta-pill {
+      display: block; text-align: center; font-family: var(--font-tech); font-weight: 700; letter-spacing: .12em;
+      text-transform: uppercase; font-size: 1.05rem; color: var(--naranja); background: var(--naranja-suave);
+      border: 1px solid var(--naranja-oscuro); padding: 1rem 1.2rem; margin-top: .4rem;
+    }
+    .qr-footer-nota { font-family: var(--font-tech); font-size: .88rem; color: var(--blanco-30); letter-spacing: .09em; text-transform: uppercase; margin-top: .8rem; }
+    .qr-showcase { display: flex; align-items: center; justify-content: center; }
+    .qr-showcase img {
+      width: 100%; max-width: 340px; object-fit: contain; background: none;
+      box-shadow: var(--sombra-md); border: none;
+    }
+
+    /* ═══ Portafolio de proyección de cobros por marketing ═══ */
+    .portafolio-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.3rem; }
+    .portafolio-card { background: var(--grafito); border: 1px solid var(--acero); padding: 1.6rem 1.5rem; position: relative; overflow: hidden; display: flex; flex-direction: column; gap: .9rem; }
+    .portafolio-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--naranja); box-shadow: var(--naranja-glow); }
+    .portafolio-card .icono { font-size: 2.1rem; display: block; }
+    .portafolio-card h3 { font-family: var(--font-racing); font-weight: 800; text-transform: uppercase; font-size: 1.34rem; color: var(--blanco); line-height: 1.08; letter-spacing: .01em; }
+    .portafolio-lista { list-style: none; display: grid; gap: .7rem; flex: 1; }
+    .portafolio-lista li { border-top: 1px solid var(--acero); padding-top: .6rem; }
+    .portafolio-lista .nombre { font-family: var(--font-tech); font-weight: 600; font-size: 1rem; color: var(--blanco-60); display: block; }
+    .portafolio-lista .rango { font-family: var(--font-tech); font-weight: 700; font-size: 1.18rem; color: var(--naranja-vivo); display: block; margin-top: 3px; }
+
+    /* ═══ Tendencia de ventas — gráfico recreado en SVG ═══ */
+    .tendencia-marco {
+      position: relative; background: var(--negro-suave); border: 1px solid var(--acero-claro);
+      padding: 1.4rem 1.7rem 1rem; width: 100%; max-width: 900px; margin: 0 auto;
+    }
+    .tendencia-esquina { position: absolute; width: 46px; height: 46px; pointer-events: none; }
+    .tendencia-esquina.tl { top: -1px; left: -1px; border-top: 3px solid var(--naranja); border-left: 3px solid var(--naranja); }
+    .tendencia-esquina.br { bottom: -1px; right: -1px; border-bottom: 3px solid var(--naranja); border-right: 3px solid var(--naranja); }
+    .tendencia-esquina.tr { top: -1px; right: -1px; border-top: 1px solid var(--acero-claro); border-right: 1px solid var(--acero-claro); }
+    .tendencia-esquina.bl { bottom: -1px; left: -1px; border-bottom: 1px solid var(--acero-claro); border-left: 1px solid var(--acero-claro); }
+    .tendencia-svg { width: 100%; height: auto; display: block; }
+    .tendencia-mes { font-family: var(--font-tech); font-weight: 700; font-size: 13px; letter-spacing: .04em; fill: var(--blanco-60); }
+    .tendencia-valor-inicio { font-family: var(--font-racing); font-weight: 900; font-size: 30px; fill: var(--naranja-vivo); }
+    .tendencia-label-inicio { font-family: var(--font-tech); font-weight: 700; font-size: 13px; letter-spacing: .06em; fill: var(--blanco-60); }
+    .tendencia-callout-bg { fill: var(--negro-suave); stroke: var(--naranja); stroke-width: 1.5; }
+    .tendencia-callout-txt { font-family: var(--font-tech); font-weight: 700; font-size: 14px; letter-spacing: .04em; fill: var(--naranja); }
+    .tendencia-valor-fin { font-family: var(--font-racing); font-weight: 900; font-size: 36px; fill: var(--blanco); }
+    .tendencia-label-fin { font-family: var(--font-tech); font-weight: 700; font-size: 13px; letter-spacing: .06em; fill: var(--blanco-60); }
+    .tendencia-servicios-bg { fill: var(--grafito); stroke: var(--blanco-30); stroke-width: 1.2; }
+    .tendencia-servicios-txt { font-family: var(--font-tech); font-weight: 700; font-size: 13px; letter-spacing: .04em; fill: var(--blanco-90); }
+
     /* Cierre */
     .final { text-align: center; align-items: center; }
     .final .logo-final { width: min(130px, 28vw); margin: 0 auto 1rem; filter: drop-shadow(0 8px 24px rgba(232,98,10,0.4)); }
@@ -293,6 +355,14 @@
       .dos-col img { max-height: 220px; }
       .paleta-grid { grid-template-columns: repeat(2, 1fr); }
       .nav-puntos { max-width: 40vw; }
+      .costos-grid { grid-template-columns: 1fr; }
+      .costo-item .desc { font-size: 1rem; }
+      .costo-item .valor { font-size: 1.02rem; }
+      .costos-total .etiqueta { font-size: .95rem; }
+      .costos-total .monto { font-size: 1.4rem; }
+      .qr-slide-grid { grid-template-columns: 1fr; }
+      .qr-showcase img { max-width: 240px; }
+      .portafolio-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -545,15 +615,15 @@
       </div>
     </section>
 
-    <!-- ═══ 14. PUBLICIDAD EN INSTAGRAM ═══ -->
+    <!-- ═══ 14. PUBLICIDAD EN REDES SOCIALES ═══ -->
     <section class="slide" data-bg="14">
       <div class="slide-inner">
         <p class="seccion-num">13 — Cómo lo damos a conocer</p>
-        <h2>Publicidad en <span>Instagram</span></h2>
+        <h2>Publicidad en <span>Redes Sociales</span></h2>
         <div class="dos-col invertido">
           <img src="img/instagram.jpg" alt="Perfil de Instagram de Motorcycle Performance Garage" />
           <p class="lead">
-            Usamos Instagram para mostrar nuestros productos, servicios y promociones, con contenido visual atractivo y de calidad — logrando mayor alcance, conexión directa con los clientes y más visibilidad para el taller.
+            Usamos Instagram, TikTok y WhatsApp para mostrar nuestros productos, servicios y promociones, con contenido visual atractivo y de calidad. WhatsApp además es nuestro canal directo de atención al público — logrando mayor alcance, conexión directa con los clientes y más visibilidad para el taller.
           </p>
         </div>
       </div>
@@ -580,8 +650,182 @@
       </div>
     </section>
 
-    <!-- ═══ 16. CIERRE ═══ -->
+    <!-- ═══ 16. INFORME DE COSTOS Y GASTOS ═══ -->
     <section class="slide" data-bg="16">
+      <div class="slide-inner">
+        <p class="seccion-num">15 — Presupuesto del proyecto</p>
+        <h2>Informe de <span>costos y gastos</span></h2>
+        <div class="costos-grid">
+          <div class="costo-item"><span class="desc">Cámara Sony ZV-E10</span><span class="valor">$3.375.962</span></div>
+          <div class="costo-item"><span class="desc">Tarjeta SD ADATA 128GB (x2)</span><span class="valor">$211.098</span></div>
+          <div class="costo-item"><span class="desc">Trípode con cabezal fluido</span><span class="valor">$1.277.837</span></div>
+          <div class="costo-item"><span class="desc">Batería recargable de la cámara</span><span class="valor">$365.811</span></div>
+          <div class="costo-item"><span class="desc">Cargador de batería para cámara</span><span class="valor">$472.469</span></div>
+          <div class="costo-item"><span class="desc">Grabadora Tascam DR-05XP</span><span class="valor">$1.072.498</span></div>
+          <div class="costo-item"><span class="desc">Memoria para grabadora de audio</span><span class="valor">$76.923</span></div>
+          <div class="costo-item"><span class="desc">Micrófonos de solapa inalámbricos</span><span class="valor">$1.430.473</span></div>
+          <div class="costo-item"><span class="desc">Audífonos Behringer BH470</span><span class="valor">$327.012</span></div>
+          <div class="costo-item"><span class="desc">Cargador de pilas</span><span class="valor">$69.606</span></div>
+          <div class="costo-item"><span class="desc">Set de pilas recargables AA/AAA</span><span class="valor">$152.541</span></div>
+          <div class="costo-item"><span class="desc">Micrófono Boom</span><span class="valor">$1.296.443</span></div>
+          <div class="costo-item"><span class="desc">Portátil HP + licencia</span><span class="valor">$2.615.330</span></div>
+          <div class="costo-item"><span class="desc">Disco duro externo 2TB</span><span class="valor">$393.852</span></div>
+        </div>
+        <div class="costos-total">
+          <span class="etiqueta">Total invertido</span>
+          <span class="monto">$13.137.855</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ 17. VISITA NUESTRO SITIO WEB ═══ -->
+    <section class="slide" data-bg="17">
+      <div class="slide-inner">
+        <p class="seccion-num">16 — Presencia digital</p>
+        <h2>Visita nuestro <span>sitio web</span></h2>
+        <div class="qr-slide-grid">
+          <div class="col-texto">
+            <p class="lead">Escanea el código QR y conoce más sobre MPG.</p>
+            <div class="tarjeta">
+              <h3>⚡ Acceso rápido</h3>
+              <p>Escanea el código QR para ingresar directamente a nuestro sitio web.</p>
+            </div>
+            <div class="tarjeta">
+              <h3>ℹ️ Información y servicios</h3>
+              <p>Descubre nuestro contenido, servicios y novedades de MPG desde un solo lugar.</p>
+            </div>
+            <div class="cta-pill">Escanea • Conoce • Conéctate</div>
+            <p class="qr-footer-nota">Motorcycle Performance Garage</p>
+          </div>
+          <div class="qr-showcase">
+            <img src="img/qr-sitio-web.png" alt="Código QR para visitar el sitio web de MPG" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ 18. PORTAFOLIO DE PROYECCIÓN DE COBROS POR MARKETING ═══ -->
+    <section class="slide" data-bg="18">
+      <div class="slide-inner">
+        <p class="seccion-num">17 — Servicios de marketing</p>
+        <h2>Portafolio de proyección de <span>cobros</span></h2>
+        <p class="lead" style="margin-bottom:1.1rem;">Tarifas de referencia (COP) para cotizar piezas de publicidad gráfica y audiovisual a futuros clientes:</p>
+        <div class="portafolio-grid">
+          <div class="portafolio-card">
+            <span class="icono">📊</span>
+            <h3>Infografías y Gráficos Estáticos</h3>
+            <ul class="portafolio-lista">
+              <li><span class="nombre">Diseño unitario</span><span class="rango">$30.000 – $100.000</span></li>
+              <li><span class="nombre">Paquete mensual (10–15 piezas)</span><span class="rango">$400.000 – $1.200.000</span></li>
+            </ul>
+          </div>
+          <div class="portafolio-card">
+            <span class="icono">🎬</span>
+            <h3>Motion Graphics y Animación 2D</h3>
+            <ul class="portafolio-lista">
+              <li><span class="nombre">Video de 15 a 30 segundos, tipografía cinética y transiciones dinámicas</span><span class="rango">$150.000 – $600.000</span></li>
+            </ul>
+          </div>
+          <div class="portafolio-card">
+            <span class="icono">✨</span>
+            <h3>Anuncios con Efectos Especiales (VFX y 3D)</h3>
+            <ul class="portafolio-lista">
+              <li><span class="nombre">Elementos 3D, partículas y composición cinematográfica, por pieza audiovisual</span><span class="rango">$800.000 – $3.500.000+</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ 19. TENDENCIA DE VENTAS ═══ -->
+    <section class="slide" data-bg="19">
+      <div class="slide-inner">
+        <p class="seccion-num" style="margin-bottom:.4rem;">18 — Resultados</p>
+        <h2 style="font-size:clamp(2.2rem, 4.6vw, 3.6rem); margin-bottom:.7rem;"><span>Tendencia</span> de ventas</h2>
+        <div class="tendencia-marco">
+          <span class="tendencia-esquina tl"></span>
+          <span class="tendencia-esquina br"></span>
+          <span class="tendencia-esquina tr"></span>
+          <span class="tendencia-esquina bl"></span>
+          <svg class="tendencia-svg" viewBox="0 0 1050 480" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="areaFade" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#e8620a" stop-opacity="0.55" />
+                <stop offset="100%" stop-color="#e8620a" stop-opacity="0" />
+              </linearGradient>
+              <filter id="glowLine" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="4" result="blur" />
+                <feMerge>
+                  <feMergeNode in="blur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+            </defs>
+
+            <!-- eje horizontal -->
+            <line x1="40" y1="380" x2="920" y2="380" stroke="#e8620a" stroke-width="2" />
+            <line x1="60" y1="372" x2="60" y2="380" stroke="#e8620a" stroke-width="2" />
+            <line x1="136.4" y1="372" x2="136.4" y2="380" stroke="#e8620a" stroke-width="2" />
+            <line x1="212.7" y1="372" x2="212.7" y2="380" stroke="#e8620a" stroke-width="2" />
+            <line x1="289.1" y1="372" x2="289.1" y2="380" stroke="#e8620a" stroke-width="2" />
+            <line x1="365.5" y1="372" x2="365.5" y2="380" stroke="#e8620a" stroke-width="2" />
+            <line x1="441.8" y1="372" x2="441.8" y2="380" stroke="#e8620a" stroke-width="2" />
+            <line x1="518.2" y1="372" x2="518.2" y2="380" stroke="#e8620a" stroke-width="2" />
+            <line x1="594.5" y1="372" x2="594.5" y2="380" stroke="#e8620a" stroke-width="2" />
+            <line x1="670.9" y1="372" x2="670.9" y2="380" stroke="#e8620a" stroke-width="2" />
+            <line x1="747.3" y1="372" x2="747.3" y2="380" stroke="#e8620a" stroke-width="2" />
+            <line x1="823.6" y1="372" x2="823.6" y2="380" stroke="#e8620a" stroke-width="2" />
+            <line x1="900.0" y1="372" x2="900.0" y2="380" stroke="#e8620a" stroke-width="2" />
+
+            <!-- relleno bajo la línea de ventas totales -->
+            <path d="M 60.0 261.5 C 72.7 258.5 110.9 249.6 136.4 243.7 C 161.8 237.8 187.3 231.9 212.7 226.0 C 238.2 220.0 263.6 214.1 289.1 208.2 C 314.5 202.2 340.0 196.3 365.5 190.4 C 390.9 184.5 416.4 179.5 441.8 172.6 C 467.3 165.7 492.7 156.8 518.2 148.9 C 543.6 141.0 569.1 133.1 594.5 125.2 C 620.0 117.3 645.5 108.4 670.9 101.5 C 696.4 94.6 721.8 88.7 747.3 83.8 C 772.7 78.8 798.2 75.9 823.6 71.9 C 849.1 68.0 887.3 62.0 900.0 60.1 L 900.0 380 L 60.0 380 Z" fill="url(#areaFade)" />
+
+            <!-- línea de servicios (blanca) -->
+            <path d="M 60.0 332.6 C 72.7 331.0 110.9 326.3 136.4 323.1 C 161.8 320.0 187.3 316.8 212.7 313.6 C 238.2 310.5 263.6 307.3 289.1 304.2 C 314.5 301.0 340.0 298.2 365.5 294.7 C 390.9 291.1 416.4 287.4 441.8 282.8 C 467.3 278.3 492.7 273.0 518.2 267.4 C 543.6 261.9 569.1 256.6 594.5 249.7 C 620.0 242.7 645.5 234.8 670.9 226.0 C 696.4 217.1 721.8 205.2 747.3 196.3 C 772.7 187.4 798.2 179.5 823.6 172.6 C 849.1 165.7 887.3 157.8 900.0 154.8" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" />
+            <circle cx="60" cy="332.6" r="5" fill="#ffffff" />
+            <circle cx="900" cy="154.85" r="5" fill="#ffffff" />
+
+            <!-- línea de ventas totales (naranja, con glow) -->
+            <path d="M 60.0 261.5 C 72.7 258.5 110.9 249.6 136.4 243.7 C 161.8 237.8 187.3 231.9 212.7 226.0 C 238.2 220.0 263.6 214.1 289.1 208.2 C 314.5 202.2 340.0 196.3 365.5 190.4 C 390.9 184.5 416.4 179.5 441.8 172.6 C 467.3 165.7 492.7 156.8 518.2 148.9 C 543.6 141.0 569.1 133.1 594.5 125.2 C 620.0 117.3 645.5 108.4 670.9 101.5 C 696.4 94.6 721.8 88.7 747.3 83.8 C 772.7 78.8 798.2 75.9 823.6 71.9 C 849.1 68.0 887.3 62.0 900.0 60.1" fill="none" stroke="#ff7620" stroke-width="4.5" stroke-linecap="round" filter="url(#glowLine)" />
+            <circle cx="60" cy="261.5" r="7" fill="#ff7620" filter="url(#glowLine)" />
+            <circle cx="900" cy="60.05" r="7" fill="#ff7620" filter="url(#glowLine)" />
+
+            <!-- meses -->
+            <text class="tendencia-mes" x="60.0" y="405" text-anchor="middle">ENE</text>
+            <text class="tendencia-mes" x="136.4" y="405" text-anchor="middle">FEB</text>
+            <text class="tendencia-mes" x="212.7" y="405" text-anchor="middle">MAR</text>
+            <text class="tendencia-mes" x="289.1" y="405" text-anchor="middle">ABR</text>
+            <text class="tendencia-mes" x="365.5" y="405" text-anchor="middle">MAY</text>
+            <text class="tendencia-mes" x="441.8" y="405" text-anchor="middle">JUN</text>
+            <text class="tendencia-mes" x="518.2" y="405" text-anchor="middle">JUL</text>
+            <text class="tendencia-mes" x="594.5" y="405" text-anchor="middle">AGO</text>
+            <text class="tendencia-mes" x="670.9" y="405" text-anchor="middle">SEP</text>
+            <text class="tendencia-mes" x="747.3" y="405" text-anchor="middle">OCT</text>
+            <text class="tendencia-mes" x="823.6" y="405" text-anchor="middle">NOV</text>
+            <text class="tendencia-mes" x="900.0" y="405" text-anchor="middle">DIC</text>
+
+            <!-- etiqueta de inicio -->
+            <text class="tendencia-valor-inicio" x="15" y="222">10K</text>
+            <text class="tendencia-label-inicio" x="15" y="243">VISTAS</text>
+
+            <!-- callout ventas totales -->
+            <line x1="880" y1="44" x2="900" y2="58" stroke="#e8620a" stroke-width="1.5" />
+            <rect class="tendencia-callout-bg" x="792" y="10" width="176" height="34" rx="17" />
+            <text class="tendencia-callout-txt" x="880" y="32" text-anchor="middle">Ventas Totales</text>
+            <text class="tendencia-valor-fin" x="908" y="100">27K</text>
+            <text class="tendencia-label-fin" x="908" y="122">VISTAS</text>
+
+            <!-- callout servicios -->
+            <line x1="916" y1="152" x2="900" y2="155" stroke="#ffffff" stroke-width="1.2" />
+            <rect class="tendencia-servicios-bg" x="918" y="137" width="112" height="30" rx="15" />
+            <text class="tendencia-servicios-txt" x="974" y="157" text-anchor="middle">Servicios</text>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ 20. CIERRE ═══ -->
+    <section class="slide" data-bg="20">
       <div class="slide-inner final">
         <img class="logo-final" src="../img/logo.png" alt="MPG — Motorcycle Performance Garage" />
         <p class="label">Gracias por su atención</p>
@@ -598,7 +842,7 @@
     <button class="nav-btn" id="btnPrev" aria-label="Diapositiva anterior">‹</button>
     <div class="nav-puntos" id="navPuntos"></div>
     <button class="nav-btn" id="btnNext" aria-label="Siguiente diapositiva">›</button>
-    <span class="nav-contador" id="navContador">1 / 16</span>
+    <span class="nav-contador" id="navContador">1 / 20</span>
   </div>
 
   <script>
