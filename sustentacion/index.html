@@ -183,9 +183,9 @@
     .miembro-desc { font-family: var(--font-body); font-weight: 300; font-size: clamp(.95rem, 2vh, 1.12rem); color: var(--blanco-60); line-height: 1.42; }
 
     /* Dos columnas texto + imagen */
-    .dos-col { display: grid; grid-template-columns: 1.15fr .85fr; gap: 2rem; align-items: stretch; }
+    .dos-col { display: grid; grid-template-columns: 1.15fr .85fr; gap: 2rem; align-items: center; }
     .dos-col.invertido { grid-template-columns: .85fr 1.15fr; }
-    .dos-col img { width: 100%; height: 100%; max-height: clamp(200px, 40vh, 400px); object-fit: cover; border: 1px solid var(--acero); box-shadow: var(--sombra-md); }
+    .dos-col img { width: 100%; height: auto; max-height: clamp(200px, 40vh, 400px); object-fit: cover; border: 1px solid var(--acero); box-shadow: var(--sombra-md); }
     .col-texto { display: flex; flex-direction: column; justify-content: center; gap: 0.8rem; min-width: 0; }
 
     .dos-tarjetas { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
