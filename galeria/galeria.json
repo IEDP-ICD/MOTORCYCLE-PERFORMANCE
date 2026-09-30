@@ -18,5 +18,10 @@
     "nombre": "Poster de servicios",
     "categoria": "Servicios",
     "archivo": "poster-servicios.jpg"
+  },
+  {
+    "nombre": "¡Estamos en servicio!",
+    "categoria": "Servicios",
+    "archivo": "estamos-en-servicio.jpg"
   }
 ]
